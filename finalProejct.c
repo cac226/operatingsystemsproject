@@ -3,7 +3,9 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
-# include <omp.h>
+#include <sys/types.h> // For pid_t
+#include <sys/wait.h>  // For wait()
+
 
 double mean(double[] data);
 double[] sort(double[] data);
