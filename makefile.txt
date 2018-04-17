@@ -1,4 +1,2 @@
 all:
-    gcc hw91.c -o hw91 -lpthread -lm
-    gcc hw92.c -o hw92 -lpthread -lm
-    gcc hw93.c -o hw93 -lpthread -lm -lrt
+    gcc finalProject.c -o finalProject -lpthread -lm
