@@ -15,6 +15,12 @@ int main (){
     /*
      PLAN: by default, will return everything, if give input, then will only do some things
      */
+	printf("Please choose what operations you wish to occur ");
+	gets(line);
+	args[0] = strtok(line, " ");
+	while (args[i] != NULL){
+		args[++i] = strtok(NULL, " ");
+	}
 	
 }
 
