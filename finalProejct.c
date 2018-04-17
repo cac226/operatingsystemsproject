@@ -6,10 +6,11 @@
 # include <omp.h>
 
 double mean(double[] data);
-double[] sort(double[] data);
-double[] minMedMax(double[] data); //returns array of min, median, and max
+double[] quicksort(double[] data);
+double median(double[] data); //median
 double quartile(double[] data); //returns
 double sd(double[] data);
+double mode(double[] data);
 
 int main (){
     /*
@@ -18,20 +19,40 @@ int main (){
 	
 }
 
+//returns the mean
 double mean(double[] data) {
-    return 0;
+    int numOfData = data.sizeof;
+    int sum = 0;
+    int i;
+    for(i = 0; i < numOfData; i++) {
+        sum += data[i];
+    }
+    return sum / numOfData;
 }
 
-double[] sort(double[] data) {
-    return data;
+//quicksort method
+double[] quicksort(double[] data) {
+    double sorted[data.sizeof];
+    
+    
+    return sorted;
 }
 
-double[] minMedMax(double[] data) { //returns array of min, median, and max
-    return data;
+//assumes data is sorted
+double median(double[] data) {
+    if(data.sizeof % 2 == 1) { //data size is odd
+        return data[(data.sizeof - 1) / 2];
+    }
+    double val1 = data[data.sizeof / 2]; //first middle value
+    double val2 = data[(data.sizeof - 2) / 2]; //second middle value
+    
+    return (val1 + val2) / 2;
 }
 
+//assumes data is sorted
+//returns values that make quartiles
 double quartile(double[] data) {
-    return 0;
+    
 }
 
 double sd(double[] data) {
