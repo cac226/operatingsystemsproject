@@ -6,7 +6,7 @@
 # include <omp.h>
 
 double mean(double[] data);
-double 
+double median(double[] data);
 
 int main (){
 	
