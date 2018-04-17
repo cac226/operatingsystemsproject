@@ -7,6 +7,7 @@
 
 double mean(double[] data);
 double median(double[] data);
+double sd(double[] data);
 
 int main (){
 	
