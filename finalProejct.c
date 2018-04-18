@@ -6,7 +6,8 @@
 #include <sys/types.h> // For pid_t
 #include <sys/wait.h>  // For wait()
 #include <ctype.h>
-
+//in order for the threads to function, they must be joined all at once, but called 
+//one by one, they should have seperate variables they modify
 
 double mean(double[] data);
 double[] sort(double[] data);
@@ -21,9 +22,10 @@ int main (){
 	char line[50];
 	char *args[30];
 	int i = 0;
-	int ops[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	int ops[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	int badinput = 0;
 	int holder = 0;
+	int threadcount = 0;
 	printf("Choose one or more of the following operations on the data by\n"
 			"typing the coresponding number(s) seperated by a space"
 			"0)all options \n1) Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
@@ -48,6 +50,50 @@ int main (){
 		printf("Error: Bad input")
 		return -1;
 	}
+	if (ops[0]){
+		for (i = 1; i < sizeof(ops); i++)
+			ops[i] = 1;
+	}
+	
+	if (ops[1]){ //mean
+		printf("mean\n");
+	}
+	
+	if (ops[2] || ops[5]) || ops[6]){ //median, max, min
+		
+		if (ops[2])//median
+			printf("median\n");
+		if (ops[6]) //minumum
+			printf("minimum\n");
+		if (ops[5])//maximum
+			printf("maximum\n");	
+	}
+	
+	if (ops[3]){ //mode
+		printf("mode\n");
+	}
+	
+	if (ops[4]){ //standard deviation
+		prinf("standard dev\n");
+	}
+	
+	if (ops[7]){ //sorted list
+		double list[3] = {1.0, 2.0, 3.0};
+		for (i = 0; i < sizeof(list); i++){//replace with data set when sort method ready
+			printf("%.2f ", list[i]);
+	}
+
+	
+	if (ops[8] || ops[9]){ //first quartile, second quartile
+		if(ops[8]){
+			printf("first quartile\n");
+		}
+		
+		if(ops[9]){
+			printf("second quartile\n");
+		}
+	}
+		
 	
 	
 	
