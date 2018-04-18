@@ -1,19 +1,20 @@
 // Caitlin Campbell and Shanti Polara Final Project
 //Beta version
-# include <stdlib.h>
-# include <stdio.h>
-# include <math.h>
-#include <sys/types.h> // For pid_t
-#include <sys/wait.h>  // For wait()
-#include <ctype.h>
-//in order for the threads to function, they must be joined all at once, but called 
-//one by one, they should have seperate variables they modify
 
-double mean(double[] data);
-double[] sort(double[] data);
-double[] minMedMax(double[] data); //returns array of min, median, and max
-double quartile(double[] data); //returns
-double sd(double[] data);
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <ctype.h>
+
+/*in order for the threads to function, they must be joined all at once, but called 
+one by one, they should have seperate variables they modify*/
+double mean(double data[]);
+double * sort(double data[]);
+double * minMedMax(double data[]); //returns array of min, median, and max
+double quartile(double data[]); //returns
+double sd(double data[]);
 
 int main (){
     /*
@@ -22,14 +23,14 @@ int main (){
 	char line[50];
 	char *args[30];
 	int i = 0;
-	int ops[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	int ops[11] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	int badinput = 0;
 	int holder = 0;
 	int threadcount = 0;
 	printf("Choose one or more of the following operations on the data by\n"
 			"typing the coresponding number(s) seperated by a space"
 			"0)all options \n1) Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
-			"\n6)Minimum Value \n7)sorted list \n8)First Quartile \n9)Third Quartile")
+			"\n6)Minimum Value \n7)sorted list \n8)First Quartile \n9)Third Quartile");
 	gets(line);
 	args[0] = strtok(line, " ");
 		
@@ -39,7 +40,7 @@ int main (){
 
 	for (i = 0; i < sizeof(args); i++){ 
 		if(isdigit(args[i])){ //checks if input valid
-			holder = args[i]
+			holder = args[i];
 			if (holder <= 9 && holder >= 0) //lets program know what operations are desired
 				ops[holder] = 1; // uses 1 for the boolean value of true
 		}
@@ -47,7 +48,7 @@ int main (){
 			badinput = 1;
 	}
 	if (badinput){
-		printf("Error: Bad input")
+		printf("Error: Bad input");
 		return -1;
 	}
 	if (ops[0]){
@@ -59,7 +60,7 @@ int main (){
 		printf("mean\n");
 	}
 	
-	if (ops[2] || ops[5]) || ops[6]){ //median, max, min
+	if ((ops[2] || ops[5]) || ops[6]){ //median, max, min
 		
 		if (ops[2])//median
 			printf("median\n");
@@ -74,15 +75,15 @@ int main (){
 	}
 	
 	if (ops[4]){ //standard deviation
-		prinf("standard dev\n");
+		printf("standard dev\n");
 	}
 	
 	if (ops[7]){ //sorted list
 		double list[3] = {1.0, 2.0, 3.0};
 		for (i = 0; i < sizeof(list); i++){//replace with data set when sort method ready
 			printf("%.2f ", list[i]);
+		}
 	}
-
 	
 	if (ops[8] || ops[9]){ //first quartile, second quartile
 		if(ops[8]){
@@ -94,28 +95,28 @@ int main (){
 		}
 	}
 		
-	
+	return 0;
 	
 	
 	
 }
 
-double mean(double[] data) {
+double mean(double data[]) {
     return 0;
 }
 
-double[] sort(double[] data) {
+double * sort(double data[]) { //note: must use this notation to return array
     return data;
 }
 
-double[] minMedMax(double[] data) { //returns array of min, median, and max
+double * minMedMax(double data[]) { //returns array of min, median, and max
     return data;
 }
 
-double quartile(double[] data) {
+double quartile(double data[]) {
     return 0;
 }
 
-double sd(double[] data) {
+double sd(double data[]) {
     return 0;
 }
