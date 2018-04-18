@@ -30,15 +30,18 @@ int main (){
 	printf("Choose one or more of the following operations on the data by\n"
 			"typing the coresponding number(s) seperated by a space"
 			"0)all options \n1) Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
-			"\n6)Minimum Value \n7)sorted list \n8)First Quartile \n9)Third Quartile");
-	gets(line);
-	args[0] = strtok(line, " ");
-		
-	while (args[i] != NULL){
-		args[++i] = strtok(NULL, " ");
+			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\n");
+	scanf("%d", &line);
+	char *token = strtok(line, " ");
+	args[0] = *token;
+	i = 1;
+	while (token != NULL){
+		args[i] = strtok(NULL, " ");
+		i++;
+		printf("H");
 	}
-
-	for (i = 0; i < sizeof(args); i++){ 
+	printf("here1\n");
+	for (i = 1; i < sizeof(args); i++){ 
 		if(isdigit(args[i])){ //checks if input valid
 			holder = args[i];
 			if (holder <= 9 && holder >= 0) //lets program know what operations are desired
@@ -47,6 +50,7 @@ int main (){
 		else
 			badinput = 1;
 	}
+	printf("here2\n");
 	if (badinput){
 		printf("Error: Bad input");
 		return -1;
@@ -55,7 +59,7 @@ int main (){
 		for (i = 1; i < sizeof(ops); i++)
 			ops[i] = 1;
 	}
-	
+	printf("here3\n");
 	if (ops[1]){ //mean
 		printf("mean\n");
 	}
