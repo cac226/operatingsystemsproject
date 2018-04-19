@@ -33,7 +33,6 @@ int main (){
 			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\n");
 	scanf("%d", &line);
 	args[0] = strtok(line, " ");
-	int i = 0;
 	while (args[i] != NULL)
 		args[++i] = strtok(NULL, " ");
 	printf("here1\n");
@@ -102,9 +101,9 @@ int main (){
 	
 }
 
--//returns the mean
-double mean(double[] data) {
-    int numOfData = data.sizeof;
+//returns the mean
+double mean(double data[]) {
+    int numOfData = sizeof(data);
     int sum = 0;
     int i;
     for(i = 0; i < numOfData; i++) {
@@ -115,31 +114,35 @@ double mean(double[] data) {
 }
 
 //quicksort method
-double[] quicksort(double[] data) {
-    double sorted[data.sizeof];
+double * quicksort(double data[]) {
+    double sorted[sizeof(data)];
     
     
     return sorted;
-double[] sort(double[] data) {
+}
+	
+double * sort(double data[]) {
     return data;
 }
 
 //assumes data is sorted
-double median(double[] data) {
-    if(data.sizeof % 2 == 1) { //data size is odd
-        return data[(data.sizeof - 1) / 2];
+double median(double data[]) {
+    if(sizeof(data) % 2 == 1) { //data size is odd
+        return data[(sizeof(data) - 1) / 2];
     }
-    double val1 = data[data.sizeof / 2]; //first middle value
-    double val2 = data[(data.sizeof - 2) / 2]; //second middle value
+    double val1 = data[sizeof(data) / 2]; //first middle value
+    double val2 = data[(sizeof(data) - 2) / 2]; //second middle value
     
     return (val1 + val2) / 2;
-double[] minMedMax(double[] data) { //returns array of min, median, and max
+}
+
+double * minMedMax(double data[]) { //returns array of min, median, and max
     return data;
 }
 
 //assumes data is sorted
 //returns values that make quartiles
-double quartile(double[] data) {
+double quartile(double data[]) {
     
     return 0;
 }
