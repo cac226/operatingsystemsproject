@@ -28,16 +28,17 @@ int main (){
 	int holder = 0;
 	int threadcount = 0;
 	printf("Choose one or more of the following operations on the data by\n"
-			"typing the coresponding number(s) seperated by a space"
-			"0)all options \n1) Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
+			"typing the coresponding number(s) seperated by a space\n"
+			"0)all options \n1)Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
 			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\n");
 	scanf("%d", &line);
 	args[0] = strtok(line, " ");
 	while (args[i] != NULL)
 		args[++i] = strtok(NULL, " ");
 	printf("here1\n");
+	printf("%d check\n ", sizeof(args)/sizeof(args[0]));
 	fflush(stdout);
-	for (i = 1; i < sizeof(args); i++){ 
+	for (i = 1; i < sizeof(args)/sizeof(args[0]); i++){ 
 		if(isdigit(args[i])){ //checks if input valid
 			holder = args[i];
 			if (holder <= 9 && holder >= 0) //lets program know what operations are desired
@@ -103,7 +104,7 @@ int main (){
 
 //returns the mean
 double mean(double data[]) {
-    int numOfData = sizeof(data);
+    int numOfData = (sizeof(data)/sizeof(data[0]));
     int sum = 0;
     int i;
     for(i = 0; i < numOfData; i++) {
@@ -115,7 +116,7 @@ double mean(double data[]) {
 
 //quicksort method
 double * quicksort(double data[]) {
-    double sorted[sizeof(data)];
+    double sorted[(sizeof(data)/sizeof(data[0]))];
     
     
     return sorted;
@@ -127,11 +128,12 @@ double * sort(double data[]) {
 
 //assumes data is sorted
 double median(double data[]) {
-    if(sizeof(data) % 2 == 1) { //data size is odd
-        return data[(sizeof(data) - 1) / 2];
+    
+	if((sizeof(data)/sizeof(data[0])) % 2 == 1) { //data size is odd
+        return data[((sizeof(data)/sizeof(data[0])) - 1) / 2];
     }
-    double val1 = data[sizeof(data) / 2]; //first middle value
-    double val2 = data[(sizeof(data) - 2) / 2]; //second middle value
+    double val1 = data[(sizeof(data)/sizeof(data[0])) / 2]; //first middle value
+    double val2 = data[((sizeof(data)/sizeof(data[0])) - 2) / 2]; //second middle value
     
     return (val1 + val2) / 2;
 }
