@@ -32,15 +32,12 @@ int main (){
 			"0)all options \n1) Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
 			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\n");
 	scanf("%d", &line);
-	char *token = strtok(line, " ");
-	args[0] = *token;
-	i = 1;
-	while (token != NULL){
-		args[i] = strtok(NULL, " ");
-		i++;
-		printf("H");
-	}
+	args[0] = strtok(line, " ");
+	int i = 0;
+	while (args[i] != NULL)
+		args[++i] = strtok(NULL, " ");
 	printf("here1\n");
+	fflush(stdout);
 	for (i = 1; i < sizeof(args); i++){ 
 		if(isdigit(args[i])){ //checks if input valid
 			holder = args[i];
