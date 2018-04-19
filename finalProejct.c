@@ -105,21 +105,48 @@ int main (){
 	
 }
 
-double mean(double data[]) {
+-//returns the mean
+double mean(double[] data) {
+    int numOfData = data.sizeof;
+    int sum = 0;
+    int i;
+    for(i = 0; i < numOfData; i++) {
+        sum += data[i];
+    }
+    return sum / numOfData;
     return 0;
 }
 
-double * sort(double data[]) { //note: must use this notation to return array
+//quicksort method
+double[] quicksort(double[] data) {
+    double sorted[data.sizeof];
+    
+    
+    return sorted;
+double[] sort(double[] data) {
     return data;
 }
 
-double * minMedMax(double data[]) { //returns array of min, median, and max
+//assumes data is sorted
+double median(double[] data) {
+    if(data.sizeof % 2 == 1) { //data size is odd
+        return data[(data.sizeof - 1) / 2];
+    }
+    double val1 = data[data.sizeof / 2]; //first middle value
+    double val2 = data[(data.sizeof - 2) / 2]; //second middle value
+    
+    return (val1 + val2) / 2;
+double[] minMedMax(double[] data) { //returns array of min, median, and max
     return data;
 }
 
-double quartile(double data[]) {
+//assumes data is sorted
+//returns values that make quartiles
+double quartile(double[] data) {
+    
     return 0;
 }
+
 
 double sd(double data[]) {
     return 0;
