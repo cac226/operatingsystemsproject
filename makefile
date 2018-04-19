@@ -1,2 +1,2 @@
 all:
-    gcc finalProject.c -o finalProject -lpthread -lm -w
+	gcc -o finalProject finalProject.c -pthread -lrt -lm -w
