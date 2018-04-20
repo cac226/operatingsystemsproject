@@ -10,7 +10,8 @@ int main () {
 	char str[80];
 	fgets(str  ,20,stdin);
 	const char s[2] = " ";
-	char *token;
+	char *token;	
+	
    
 	/* get the first token */
 	token = strtok(str, s);
@@ -18,6 +19,10 @@ int main () {
 	/* walk through other tokens */
 	while( token != NULL ) {
 		printf( " %s l\n", token ); 
+		if (isdigit(*token))
+			printf("yes");
+		else
+			printf("no");
 		token = strtok(NULL, s);
 	}
    

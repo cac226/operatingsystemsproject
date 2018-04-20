@@ -25,7 +25,8 @@ int main (){
 	double data[10]; /* this is a temperary file for the data that will be given
 	 the values from the input file*/
 	char line[50];
-	char *args[30];
+	char args[30];
+	char *token;
 	int i = 0;
 	int ops[11] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	int badinput = 0;
@@ -42,13 +43,17 @@ int main (){
 			"typing the coresponding number(s) seperated by a space\n"
 			"0)all options \n1)Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
 			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\n");
-	scanf("%d", &line);
-	for (i=0; i < 50; i++)
-		printf(line[i]);
+	fgets(line, 30, stdin);
 	
-	args[0] = strtok(line, " ");
-	//printf("here2\n");
-	while (args[i] != NULL){
+	token = strtok(line, " ");
+	sprintf
+	//args[0] = strtok(line, " ");
+	while (token != NULL){
+		token = strtok(NULL, " ");
+		
+	}
+	
+	/*while (args[i] != NULL){
 		args[i] = strtok(NULL, " ");
 		hold = args[i];
 		printf("%s", hold);
@@ -56,7 +61,7 @@ int main (){
 			printf("yay\n");
 		}
 		i++;
-	}
+	}*/
 	//printf("here3\n");
 	fflush(stdout);
 	iterator = sizeof(args) - sizeof(args[0]);
