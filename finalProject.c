@@ -1,6 +1,6 @@
 // Caitlin Campbell and Shanti Polara Final Project
 //Beta version
-
+#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -43,7 +43,7 @@ int main (){
 	fgets(line, 20, stdin);
 	printf("%s-line", line);
 	token = strtok(line, " ");
-	while( token != NULL ) {
+	while(token != NULL ) {
 		if (isdigit(*token)){
 			con = *token - '0';
 			printf("%d-val", con);

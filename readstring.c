@@ -20,7 +20,6 @@ int main () {
 	while( token != NULL ) {
 		if (isdigit(*token)){
 			con = *token - '0';
-			printf("%d-digit",con);
 			if (con <= 9 && con >= 0)
 				printf("yes\n");
 		}
