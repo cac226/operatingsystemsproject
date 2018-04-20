@@ -11,16 +11,19 @@ int main () {
 	fgets(str  ,20,stdin);
 	const char s[2] = " ";
 	char *token;	
-	
+	int con;
    
 	/* get the first token */
 	token = strtok(str, s);
    
 	/* walk through other tokens */
 	while( token != NULL ) {
-		printf( " %s l\n", token ); 
-		if (isdigit(*token))
-			printf("yes");
+		if (isdigit(*token)){
+			con = *token - '0';
+			printf("%d-digit",con);
+			if (con <= 9 && con >= 0)
+				printf("yes\n");
+		}
 		else
 			printf("no");
 		token = strtok(NULL, s);
