@@ -8,7 +8,7 @@
 int main () {
 	printf("enter sentance: ");
 	char str[80];
-	scanf("%s", str);
+	fgets(str  ,20,stdin);
 	const char s[2] = " ";
 	char *token;
    
