@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <ctype.h>
+#include <unistd.h>
 
 /*in order for the threads to function, they must be joined all at once, but called 
 one by one, they should have seperate variables they modify*/
