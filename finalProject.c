@@ -46,10 +46,8 @@ int main (){
 	while(token != NULL ) {
 		if (isdigit(*token)){
 			con = *token - '0';
-			printf("%d-val", con);
 			fflush(stdout);
 			if (con <= 9 && con >= 0)
-				printf("correct");
 				ops[con] = 1;
 		}
 		else
