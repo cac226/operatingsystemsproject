@@ -29,28 +29,49 @@ int main (){
 	int ops[11] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	int badinput = 0;
 	int holder = 0;
+	char hold;
 	int threadcount = 0;
+	int iterator;
+	//printf("here1\n");
+	fflush(stdout);
 	//defines data that methods will return
 	double mean, sd;
-	double sort[(sizeof(data)/sizeof(data[0]))], minMedmax[3], quartile[2]; 
+	//double sort[(sizeof(data)/sizeof(data[0]))], minMedmax[3], quartile[2]; 
 	printf("Choose one or more of the following operations on the data by\n"
 			"typing the coresponding number(s) seperated by a space\n"
 			"0)all options \n1)Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
 			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\n");
 	scanf("%d", &line);
+	for (i=0; i < 50; i++)
+		printf(line[i]);
+	
 	args[0] = strtok(line, " ");
-	while (args[i] != NULL && strcmp(args[i], "null") != 0){
-		args[++i] = strtok(NULL, " ");
+	//printf("here2\n");
+	while (args[i] != NULL){
+		args[i] = strtok(NULL, " ");
+		hold = args[i];
+		printf("%s", hold);
+		if(isdigit(args[i])){ 
+			printf("yay\n");
+		}
+		i++;
 	}
-	for (i = 1; i < sizeof(args)/sizeof(args[0]); i++){ 
+	//printf("here3\n");
+	fflush(stdout);
+	iterator = sizeof(args) - sizeof(args[0]);
+	i = 1;
+	/*
+	while(iterator > 0){ 
 		if(isdigit(args[i])){ //checks if input valid
 			holder = args[i];
 			if (holder <= 9 && holder >= 0) //lets program know what operations are desired
 				ops[holder] = 1;
+			else
+				badinput = 1;
 		}
-		else
-			badinput = 1;
-	}
+		iterator = iterator - sizeof(args[i]);
+		i++;
+	}*/
 	printf("here1\n");
 	if (badinput){
 		printf("Error: Bad input\n");
