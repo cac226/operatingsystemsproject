@@ -40,17 +40,16 @@ int main (){
 	scanf("%d", &line);
 	args[0] = strtok(line, " ");
 	while (args[i] != NULL && strcmp(args[i], "null") != 0){
-		args[i] = strtok(NULL, " ");
-		printf("%s ?\n", args[i]);
-		if(args[i] != NULL && isdigit(args[i])){ //checks if input valid
+		args[++i] = strtok(NULL, " ");
+	}
+	for (i = 1; i < sizeof(args)/sizeof(args[0]); i++){ 
+		if(isdigit(args[i])){ //checks if input valid
 			holder = args[i];
 			if (holder <= 9 && holder >= 0) //lets program know what operations are desired
-				ops[holder] = 1; // uses 1 for the boolean value of true
+				ops[holder] = 1;
 		}
-		else{
+		else
 			badinput = 1;
-		}
-		i++;
 	}
 	printf("here1\n");
 	if (badinput){
