@@ -33,12 +33,8 @@ int main (){
 			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\n");
 	scanf("%d", &line);
 	args[0] = strtok(line, " ");
-	while (args[i] != NULL)
+	while (args[i] != NULL){
 		args[++i] = strtok(NULL, " ");
-	printf("here1\n");
-	printf("%d check\n ", sizeof(args)/sizeof(args[0]));
-	fflush(stdout);
-	for (i = 1; i < sizeof(args)/sizeof(args[0]); i++){ 
 		if(isdigit(args[i])){ //checks if input valid
 			holder = args[i];
 			if (holder <= 9 && holder >= 0) //lets program know what operations are desired
@@ -47,7 +43,7 @@ int main (){
 		else
 			badinput = 1;
 	}
-	printf("here2\n");
+	printf("here1\n");
 	if (badinput){
 		printf("Error: Bad input");
 		return -1;
