@@ -15,6 +15,7 @@ double mean(double data[]);
 double * sort(double data[]);
 double * minMedMax(double data[]); //returns array of min, median, and max
 double * quartile(double data[]); //returns
+
 double sd(double data[]);
 
 int main (){
@@ -125,11 +126,55 @@ double mean(double data[]) {
 }
 
 //quicksort method
-double * quicksort(double data[]) {
-    double sorted[(sizeof(data)/sizeof(data[0]))];
+double * mergesort(double data[]) {
+    //number of elements in the data set
+    int dataSize = sizeof(data)/sizeof(data[0]);
+    
+    //recursion step
+    if(dataSize < 2) {
+        return data[];
+    }
+    
+    double firstHalf[];
+    double secondHalf[];
     
     
-    return sorted;
+    
+    reutrn(mergesort(merge(firstHalf), merge(secondHalf)));
+}
+
+double * merge(double firstHalf[], double secondHalf[]) {
+    int i = 0;
+    int j = 0;
+    int firstSize  = sizeof(firstHalf)/sizeof(firstHalf[0]);
+    int secondSize = sizeof(secondHalf)/sizeof(secondHalf[0]);
+    double result[firstSize + secondSize];
+    
+    while(i < firstSize && j < secondSize) {
+        if(firstHalf[i] < secondHalf[j]) {
+            //i element is smaller
+            result[i + j] = firstHalf[i];
+            i++;
+        } else {
+            //j element is smaller
+            result[i + j] = secondHalf[j];
+            j++;
+        }
+    }
+    
+    //if there's still some left in the first half
+    while(i < firstSize) {
+        result[i + j] = firstHalf[i];
+        i++;
+    }
+    
+    //if there's still some left in the second half
+    while(j < secondSize) {
+        result[i + j] = secondHalf[j];
+        j++;
+    }
+    
+    return result;
 }
 	
 double * sort(double data[]) {
@@ -138,12 +183,14 @@ double * sort(double data[]) {
 
 //assumes data is sorted
 double median(double data[]) {
+    //number of elements in the data set
+    int dataSize = sizeof(data)/sizeof(data[0]);
     
-	if((sizeof(data)/sizeof(data[0])) % 2 == 1) { //data size is odd
-        return data[((sizeof(data)/sizeof(data[0])) - 1) / 2];
+	if(dataSize % 2 == 1) { //data size is odd
+        return data[(dataSize - 1) / 2];
     }
-    double val1 = data[(sizeof(data)/sizeof(data[0])) / 2]; //first middle value
-    double val2 = data[((sizeof(data)/sizeof(data[0])) - 2) / 2]; //second middle value
+    double val1 = data[dataSize / 2]; //first middle value
+    double val2 = data[(dataSize - 2) / 2]; //second middle value
     
     return (val1 + val2) / 2;
 }
