@@ -55,7 +55,6 @@ int main (){
 			"0)all options \n1)Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
 			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\n");
 	fgets(line, 20, stdin);
-	printf("%s-line", line);
 	token = strtok(line, " ");
 	//reading in string, making sure only numbers were entered
 	while(token != NULL ) {
