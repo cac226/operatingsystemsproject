@@ -51,7 +51,7 @@ int main (){
 	double sort[(sizeof(data)/sizeof(data[0]))];
 	//double sort[(sizeof(data)/sizeof(data[0]))], minMedmax[3], quartile[2]; 
 	printf("Choose one or more of the following operations on the data by\n"
-			"typing the coresponding number(s) seperated by a space\n"
+			"typing the corresponding number(s) separated by a space\n"
 			"0)all options \n1)Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
 			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\n");
 	fgets(line, 20, stdin);
