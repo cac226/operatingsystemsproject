@@ -78,7 +78,7 @@ int main (){
 		pthread_create(&tid[1], mean, mean, data);
 		threadcount++;
 	}
-	
+	 
 	if ((ops[2] || ops[5]) || ops[6]){ //median, max, min
 		
 		if (ops[2])//median
