@@ -107,6 +107,26 @@ int main (){
 		}
 	}
 		
+	for (i = 0; i < threadcount; i++)
+		pthread_join(tid[i], NULL);
+	
+	//print statements for results
+	if(ops[1])
+		printf("Mean = %.2f\n", mean);
+	if(ops[2])
+		printf("Median = %.2f\n", minMedmax[1]);
+	if(ops[3])
+		printf("Mode = %.2f\n", mode);
+	if(ops[4])
+		printf("Standard Deviation = %.2f\n", sd);
+	if(ops[5])
+		printf("Maximum Value = %.2f\n", minMedmax[2]);
+	if(ops[6])
+		printf("Minimum Value = %.2f\n", minMedmax[0]);
+	if(ops[8])
+		printf("First Quartile = %.2f\n", quartile[0]);
+	if(ops[9])
+		printf(	
 	return 0;
 	
 	
