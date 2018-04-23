@@ -74,7 +74,7 @@ int main (){
 	
 	//error message if non-numbers were entered
 	if (badinput){
-		printf("Error: Bad input\n");
+		printf("Error: Bad input, you have not entered your request in the correct format\n");
 		return -1;
 	}
 		
