@@ -17,13 +17,13 @@ double * minMedMax(double data[]); //returns array of min, median, and max
 double * quartile(double data[]); //returns
 
 double sd(double data[]);
-
+double minMedmax[3], quartile[2];
 int main (){
     /*
      PLAN: by default, will return everything, if give input, then will only do some things
      */
 	 //data from file must be stored into array called data 
-	double data[10]; /* this is a temperary file for the data that will be given
+	double data[10] = {1,3,4,55,6,21,4,5,7,10} /* this is a temperary file for the data that will be given
 	 the values from the input file*/
 	char line[20];
 	char *token;
@@ -36,6 +36,7 @@ int main (){
 	fflush(stdout);
 	//defines data that methods will return
 	double mean, sd;
+	double sort[(sizeof(data)/sizeof(data[0]))];
 	//double sort[(sizeof(data)/sizeof(data[0]))], minMedmax[3], quartile[2]; 
 	printf("Choose one or more of the following operations on the data by\n"
 			"typing the coresponding number(s) seperated by a space\n"
@@ -44,6 +45,7 @@ int main (){
 	fgets(line, 20, stdin);
 	printf("%s-line", line);
 	token = strtok(line, " ");
+	//reading in string, making sure only numbers were entered
 	while(token != NULL ) {
 		if (isdigit(*token)){
 			con = *token - '0';
@@ -55,21 +57,26 @@ int main (){
 			badinput = 1;
 		token = strtok(NULL, " ");
 	}
-   
+
+	//initialize thread ids, can have up to 6 threads, so prepair 6 tids
+	pthread_t tid[6]; 
 	
-	printf("here1\n");
-	fflush(stdout);
+	//error message if non-numbers were entered
 	if (badinput){
 		printf("Error: Bad input\n");
 		return -1;
 	}
+		
+	//if user requests all operations, set all operations to true
 	if (ops[0]){
 		for (i = 1; i < sizeof(ops)/sizeof(ops[0]); i++)
 			ops[i] = 1;
 	}
-	printf("here3\n");
+	
+	//begin thread creation, keeping track of number of threads
 	if (ops[1]){ //mean
-		printf("mean\n");
+		pthread_create(&tid[1], mean, mean, data);
+		threadcount++;
 	}
 	
 	if ((ops[2] || ops[5]) || ops[6]){ //median, max, min
@@ -79,7 +86,9 @@ int main (){
 		if (ops[6]) //minumum
 			printf("minimum\n");
 		if (ops[5])//maximum
-			printf("maximum\n");	
+			printf("maximum\n");
+		//pthread_create(&tid[2], NULL, minmedmax, data);
+		//threadcount++;			
 	}
 	
 	if (ops[3]){ //mode
@@ -92,7 +101,7 @@ int main (){
 	
 	if (ops[7]){ //sorted list
 		double list[3] = {1.0, 2.0, 3.0};
-		for (i = 0; i < sizeof(list); i++){//replace with data set when sort method ready
+		for (i = 0; i < sizeof(list)/sizeof(list[0]); i++){//replace with data set when sort method ready
 			printf("%.2f ", list[i]);
 		}
 	}
@@ -142,7 +151,6 @@ double mean(double data[]) {
         sum += data[i];
     }
     return sum / numOfData;
-    return 0;
 }
 
 //quicksort method
@@ -160,7 +168,7 @@ double * mergesort(double data[]) {
     
     
     
-    reutrn(mergesort(merge(firstHalf), merge(secondHalf)));
+    return(mergesort(merge(firstHalf), merge(secondHalf)));
 }
 
 double * merge(double firstHalf[], double secondHalf[]) {
@@ -201,6 +209,7 @@ double * sort(double data[]) {
     return data;
 }
 
+
 //assumes data is sorted
 double median(double data[]) {
     //number of elements in the data set
@@ -215,6 +224,7 @@ double median(double data[]) {
     return (val1 + val2) / 2;
 }
 
+//indexes:min = 0, med = 1, med =2
 double * minMedMax(double data[]) { //returns array of min, median, and max
     return data;
 }
