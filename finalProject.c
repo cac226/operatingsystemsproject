@@ -82,7 +82,7 @@ int main (){
 	}
 	
 	//checks if user is requesting any operations that use a sorted list
-	if (ops[7] || ops[2] || ops[5]) || ops[6] || ops[3] || ops[8] || ops[9]){ 
+	if (ops[7] || ops[2] || ops[5] || ops[6] || ops[3] || ops[8] || ops[9]){ 
 		//test code
 		double list[3] = {1.0, 2.0, 3.0};
 		for (i = 0; i < sizeof(list)/sizeof(list[0]); i++){
@@ -167,7 +167,8 @@ int main (){
 	if(ops[8])
 		printf("First Quartile = %.2f\n", quartileData[0]);
 	if(ops[9])
-		printf(	
+		printf("Third Quartile = %.2f\n", quartileData[1]);
+	
 	return 0;
 	
 	
@@ -192,11 +193,11 @@ double * mergesort(double data[]) {
     
     //recursion step
     if(dataSize < 2) {
-        return data[];
+        return data;
     }
     
-    double firstHalf[];
-    double secondHalf[];
+    double firstHalf(sizeof(data)/sizeof(data[0]);
+    double secondHalf(sizeof(data)/sizeof(data[0]);
     
     
     
@@ -268,7 +269,7 @@ double * minMedMax(double data[]) { //returns array of min, median, and max
 //assumes data is sorted
 //returns values that make quartiles
 //quartile data index: 0 is first quartile, 1 is second quartile
-double quartile(double data[]) {
+double * quartile(double data[]) {
     //method does not need to return anything, results should be assined to quartileData
     //quartileData[0]=
 	//quartileData[1]=
