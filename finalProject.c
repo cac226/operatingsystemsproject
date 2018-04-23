@@ -260,7 +260,7 @@ double median(double data[]) {
     double val2 = data[(dataSize - 2) / 2]; //second middle value
     
     return (val1 + val2) / 2;
-}
+} 
 
 //indexes: min = 0, med = 1, med =2
 //finds the minimum, median and max of the data
