@@ -134,6 +134,7 @@ int main (){
 			printf("second quartile\n");
 		}
 		pthread_create(&tid[j], &attr, quartile, &data);
+		threadcount++;
 		j++;
 	}
 		
