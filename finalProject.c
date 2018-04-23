@@ -17,7 +17,7 @@ double * minMedMax(double data[]); //returns array of min, median, and max
 double * quartile(double data[]); //returns
 
 double sd(double data[]);
-double minMedmax[3], quartile[2];
+double min_Med_max[3], quartileData[2];
 
 int main (){
     /*
@@ -199,6 +199,7 @@ double * mergesort(double data[]) {
     return(mergesort(merge(firstHalf), merge(secondHalf)));
 }
 
+//merge method for mergesorting the data
 double * merge(double firstHalf[], double secondHalf[]) {
     int i = 0;
     int j = 0;
@@ -232,7 +233,8 @@ double * merge(double firstHalf[], double secondHalf[]) {
     
     return result;
 }
-	
+
+//returns sorted list of data
 double * sort(double data[]) {
     return data;
 }
@@ -255,14 +257,18 @@ double median(double data[]) {
 //indexes: min = 0, med = 1, med =2
 //finds the minimum, median and max of the data
 double * minMedMax(double data[]) { //returns array of min, median, and max
-    return minmedmax;
+    //min_Med_max should be assigned the results, method does not need to return anything
+	return min_Med_max;
 }
 
 //assumes data is sorted
 //returns values that make quartiles
-double * quartile(double data[]) {
-    
-    return 0;
+//quartile data index: 0 is first quartile, 1 is second quartile
+double quartile(double data[]) {
+    //method does not need to return anything, results should be assined to quartileData
+    //quartileData[0]=
+	//quartileData[1]=
+	
 }
 
 //returns the standard deviation of the data
