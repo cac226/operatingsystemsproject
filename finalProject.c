@@ -15,8 +15,12 @@ double mean(double data[]);
 double * sort(double data[]);
 double * minMedMax(double data[]); //returns array of min, median, and max
 double * quartile(double data[]); //returns
-
 double sd(double data[]);
+double * merge(double firstHalf[], double secondHalf[]);
+double * mergesort(double data[]);
+double mode(double data[]);
+
+
 double min_Med_max[3], quartileData[2];
 
 int main (){
@@ -24,7 +28,7 @@ int main (){
      PLAN: by default, will return everything, if give input, then will only do some things
      */
 	 //data from file must be stored into array called data 
-	double data[10] = {1,3,4,55,6,21,4,5,7,10} /* this is a temperary file for the data that will be given
+	double data[10] = {1,3,4,55,6,21,4,5,7,10}; /* this is a temperary file for the data that will be given
 	 the values from the input file*/
 	//recives user input
 	char line[20];
@@ -107,7 +111,7 @@ int main (){
 			printf("minimum\n");
 		if (ops[5])//maximum
 			printf("maximum\n");
-		pthread_create(&tid[j], &attr, minmedmax, data);
+		pthread_create(&tid[j], &attr, minMedmax, data);
 		threadcount++;	
 		j++;
 	}
@@ -151,17 +155,17 @@ int main (){
 	if(ops[1])
 		printf("Mean = %.2f\n", mean);
 	if(ops[2])
-		printf("Median = %.2f\n", minMedmax[1]);
+		printf("Median = %.2f\n", min_Med_max[1]);
 	if(ops[3])
 		printf("Mode = %.2f\n", mode);
 	if(ops[4])
 		printf("Standard Deviation = %.2f\n", sd);
 	if(ops[5])
-		printf("Maximum Value = %.2f\n", minMedmax[2]);
+		printf("Maximum Value = %.2f\n", min_Med_max[2]);
 	if(ops[6])
-		printf("Minimum Value = %.2f\n", minMedmax[0]);
+		printf("Minimum Value = %.2f\n", min_Med_max[0]);
 	if(ops[8])
-		printf("First Quartile = %.2f\n", quartile[0]);
+		printf("First Quartile = %.2f\n", quartileData[0]);
 	if(ops[9])
 		printf(	
 	return 0;
@@ -274,4 +278,9 @@ double quartile(double data[]) {
 //returns the standard deviation of the data
 double sd(double data[]) {
     return 0;
+}
+
+//returns the mode of the data
+double mode(double data[]){
+	return 0;
 }
