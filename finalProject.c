@@ -18,6 +18,7 @@ double * quartile(double data[]); //returns
 
 double sd(double data[]);
 double minMedmax[3], quartile[2];
+
 int main (){
     /*
      PLAN: by default, will return everything, if give input, then will only do some things
@@ -73,16 +74,21 @@ int main (){
 			ops[i] = 1;
 	}
 	
-	if (ops[7]){ //sorted list
+	//checks if user is requesting any operations that use a sorted list
+	if (ops[7] || ops[2] || ops[5]) || ops[6] || ops[3] || ops[8] || ops[9]){ 
+		//test code
 		double list[3] = {1.0, 2.0, 3.0};
-		for (i = 0; i < sizeof(list)/sizeof(list[0]); i++){//replace with data set when sort method ready
+		for (i = 0; i < sizeof(list)/sizeof(list[0]); i++){
 			printf("%.2f ", list[i]);
 		}
+		pthread_create(&tid[7], &attr, sort, &data);
+		
+		
 	}
 	
 	//begin thread creation, keeping track of number of threads
 	if (ops[1]){ //mean
-		pthread_create(&tid[1], mean, mean, data);
+		pthread_create(&tid[1], &attr, mean, data);
 		threadcount++;
 	}
 	 
