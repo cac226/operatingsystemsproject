@@ -42,6 +42,10 @@ int main (){
 	int badinput = 0;
 	//keeps track of how many threads are being used
 	int threadcount = 0;
+	/* set of attributes for the thread */
+	pthread_attr_t attr; 
+	/* get the default attributes */
+	pthread_attr_init(&attr);
 	//defines data that methods will return
 	double mean, sd;
 	double sort[(sizeof(data)/sizeof(data[0]))];
@@ -89,7 +93,7 @@ int main (){
 			printf("%.2f ", list[i]);
 		}
 		//sort has to sort the data before any of the methods that require sorted data run
-		pthread_create(&tid[6], &attr, sort, &data);
+		pthread_create(&tid[6], &attr, *sort, &data);
 		pthread_join(tid[6], NULL);
 		
 	}
@@ -111,7 +115,7 @@ int main (){
 			printf("minimum\n");
 		if (ops[5])//maximum
 			printf("maximum\n");
-		pthread_create(&tid[j], &attr, minMedmax, data);
+		pthread_create(&tid[j], &attr, minMedMax, data);
 		threadcount++;	
 		j++;
 	}
@@ -196,12 +200,12 @@ double * mergesort(double data[]) {
         return data;
     }
     
-    double firstHalf(sizeof(data)/sizeof(data[0]);
-    double secondHalf(sizeof(data)/sizeof(data[0]);
+    double firstHalf[(sizeof(data)/sizeof(data[0]))];
+    double secondHalf[(sizeof(data)/sizeof(data[0]))];
     
     
     
-    return(mergesort(merge(firstHalf), merge(secondHalf)));
+    return(mergesort(merge(firstHalf, secondHalf)));
 }
 
 //merge method for mergesorting the data
