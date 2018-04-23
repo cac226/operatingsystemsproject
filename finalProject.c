@@ -63,6 +63,8 @@ int main (){
 			fflush(stdout);
 			if (con <= 9 && con >= 0)
 				ops[con] = 1;
+			else
+				badinput = 1;
 		}
 		else
 			badinput = 1;
