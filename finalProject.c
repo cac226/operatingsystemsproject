@@ -26,16 +26,18 @@ int main (){
 	 //data from file must be stored into array called data 
 	double data[10] = {1,3,4,55,6,21,4,5,7,10} /* this is a temperary file for the data that will be given
 	 the values from the input file*/
+	//recives user input
 	char line[20];
+	//tokenizes input into an array
 	char *token;
-	int i = 0;
+	//counter value
+	int con, i = 0;
+	//keeps track of requested operations on the data using 0, 1 as boolean values
 	int ops[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	//keeps track of if user inputs non-numbers
 	int badinput = 0;
 	//keeps track of how many threads are being used
 	int threadcount = 0;
-	int con;
-	//printf("here1\n");
-	fflush(stdout);
 	//defines data that methods will return
 	double mean, sd;
 	double sort[(sizeof(data)/sizeof(data[0]))];
@@ -60,7 +62,7 @@ int main (){
 		token = strtok(NULL, " ");
 	}
 
-	//initialize thread ids, can have up to 6 threads, so prepair 6 tids
+	//initialize thread ids
 	pthread_t tid[6]; 
 	
 	//error message if non-numbers were entered
@@ -96,6 +98,7 @@ int main (){
 		j++;
 	}
 	 
+	//checks if user requested median, max or min as operations
 	if ((ops[2] || ops[5]) || ops[6]){ //median, max, min
 		
 		if (ops[2])//median
@@ -109,14 +112,16 @@ int main (){
 		j++;
 	}
 	
-	if (ops[3]){ //mode
+	//checks if user requested mode as an operation
+	if (ops[3]){ 
 		printf("mode\n");
 		pthread_create(&tid[j], &attr, mode, &data);
 		threadcount++;	
 		j++;
 	}
 	
-	if (ops[4]){ //standard deviation
+	//checks if user requested standard deviation as an operation
+	if (ops[4]){ 
 		printf("standard dev\n");
 		pthread_create(&tid[j], &attr, sd, &data);
 		threadcount++;	
@@ -124,12 +129,13 @@ int main (){
 	}
 	
 
-	
-	if (ops[8] || ops[9]){ //first quartile, second quartile
+	//checks if user requested first quartile or second quartiles as operations
+	if (ops[8] || ops[9]){ 
+		//first quartile
 		if(ops[8]){
 			printf("first quartile\n");
 		}
-		
+		//second quartile
 		if(ops[9]){
 			printf("second quartile\n");
 		}
