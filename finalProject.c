@@ -31,6 +31,7 @@ int main (){
 	int i = 0;
 	int ops[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	int badinput = 0;
+	//keeps track of how many threads are being used
 	int threadcount = 0;
 	int con;
 	//printf("here1\n");
@@ -81,15 +82,18 @@ int main (){
 		for (i = 0; i < sizeof(list)/sizeof(list[0]); i++){
 			printf("%.2f ", list[i]);
 		}
-		pthread_create(&tid[7], &attr, sort, &data);
-		
+		//sort has to sort the data before any of the methods that require sorted data run
+		pthread_create(&tid[6], &attr, sort, &data);
+		pthread_join(tid[6], NULL);
 		
 	}
 	
-	//begin thread creation, keeping track of number of threads
+	int j = 0;
+	//thread creation for mean, keeping track of number of threads
 	if (ops[1]){ //mean
-		pthread_create(&tid[1], &attr, mean, data);
+		pthread_create(&tid[j], &attr, mean, &data);
 		threadcount++;
+		j++;
 	}
 	 
 	if ((ops[2] || ops[5]) || ops[6]){ //median, max, min
@@ -100,16 +104,23 @@ int main (){
 			printf("minimum\n");
 		if (ops[5])//maximum
 			printf("maximum\n");
-		//pthread_create(&tid[2], NULL, minmedmax, data);
-		//threadcount++;			
+		pthread_create(&tid[j], &attr, minmedmax, data);
+		threadcount++;	
+		j++;
 	}
 	
 	if (ops[3]){ //mode
 		printf("mode\n");
+		pthread_create(&tid[j], &attr, mode, &data);
+		threadcount++;	
+		j++;
 	}
 	
 	if (ops[4]){ //standard deviation
 		printf("standard dev\n");
+		pthread_create(&tid[j], &attr, sd, &data);
+		threadcount++;	
+		j++;
 	}
 	
 
@@ -122,6 +133,8 @@ int main (){
 		if(ops[9]){
 			printf("second quartile\n");
 		}
+		pthread_create(&tid[j], &attr, quartile, &data);
+		j++;
 	}
 		
 	for (i = 0; i < threadcount; i++)
