@@ -73,6 +73,13 @@ int main (){
 			ops[i] = 1;
 	}
 	
+	if (ops[7]){ //sorted list
+		double list[3] = {1.0, 2.0, 3.0};
+		for (i = 0; i < sizeof(list)/sizeof(list[0]); i++){//replace with data set when sort method ready
+			printf("%.2f ", list[i]);
+		}
+	}
+	
 	//begin thread creation, keeping track of number of threads
 	if (ops[1]){ //mean
 		pthread_create(&tid[1], mean, mean, data);
@@ -99,12 +106,7 @@ int main (){
 		printf("standard dev\n");
 	}
 	
-	if (ops[7]){ //sorted list
-		double list[3] = {1.0, 2.0, 3.0};
-		for (i = 0; i < sizeof(list)/sizeof(list[0]); i++){//replace with data set when sort method ready
-			printf("%.2f ", list[i]);
-		}
-	}
+
 	
 	if (ops[8] || ops[9]){ //first quartile, second quartile
 		if(ops[8]){
@@ -224,9 +226,10 @@ double median(double data[]) {
     return (val1 + val2) / 2;
 }
 
-//indexes:min = 0, med = 1, med =2
+//indexes: min = 0, med = 1, med =2
+//finds the minimum, median and max of the data
 double * minMedMax(double data[]) { //returns array of min, median, and max
-    return data;
+    return minmedmax;
 }
 
 //assumes data is sorted
@@ -236,7 +239,7 @@ double * quartile(double data[]) {
     return 0;
 }
 
-
+//returns the standard deviation of the data
 double sd(double data[]) {
     return 0;
 }
