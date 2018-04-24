@@ -204,7 +204,7 @@ double * mergesort(double data[]) {
     
     
     
-    return(mergesort(merge(firstHalf, secondHalf)));
+    return(merge(mergesort(firstHalf), mergesort(secondHalf)));
 }
 
 //merge method for mergesorting the data
