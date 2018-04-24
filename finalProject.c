@@ -21,7 +21,7 @@ double mode(double data[]);
 
 
 double quartileData[2];
-double mean, sd, min, median, max;
+double meanVal, standardDeviation, min, median, max;
 double *sortedData;
 
 int main(int argc, char *argv[]){
@@ -48,7 +48,7 @@ int main(int argc, char *argv[]){
 	/* get the default attributes */
 	pthread_attr_init(&attr);
 	//defines data that methods will return
-	double mean, sd;
+	double meanVal, standardDeviation;
 	//alocating size of sortedData to be size of input data
 	sortedData = malloc(sizeof(data)/sizeof(data[0]));
 	//pointer to file
@@ -137,7 +137,7 @@ int main(int argc, char *argv[]){
 			printf("minimum\n");
 		if (ops[5])//maximum
 			printf("maximum\n");
-		pthread_create(&tid[j], &attr, NULL, data);
+		pthread_create(&tid[j], &attr, minMedMax, data);
 		threadcount++;	
 		j++;
 	}
@@ -179,15 +179,15 @@ int main(int argc, char *argv[]){
 	
 	//print statements for results
 	if(ops[1])
-		printf("Mean = %.2f\n", mean);
+		printf("Mean = %.2f\n", meanVal);
 	if(ops[2])
 		printf("Median = %.2f\n", median);
 	if(ops[3])
 		printf("Mode = %.2f\n", mode);
 	if(ops[4])
-		printf("Standard Deviation = %.2f\n", sd);
+		printf("Standard Deviation = %.2f\n", standardDeviation);
 	if(ops[5])
-		printf("Maximum Value = %.2f\n", max;
+		printf("Maximum Value = %.2f\n", max);
 	if(ops[6])
 		printf("Minimum Value = %.2f\n", min);
 	if(ops[8])
@@ -209,7 +209,8 @@ double mean(double data[]) {
     for(i = 0; i < numOfData; i++) {
         sum += data[i];
     }
-    return sum / numOfData;
+    meanVal = sum / numOfData;
+    return 0;
 }
                
 //returns sorted list of data
@@ -263,7 +264,7 @@ double sd(double data[]) {
         sum += (myMean - data[i]) * (myMean - data[i]);
     }
     
-    sd = sqrt(sum / dataSize);
+    standardDeviation = sqrt(sum / dataSize);
     return 0;
 }
 
@@ -277,7 +278,7 @@ double mode(double data[]){
     double currentMode = data[0];
     int maxTimesOccured = 1;
     int i = 0;
-    while(i < dataSize && (Math.abs(data[i] - currentMode) < EPSILON)) {
+    while(i < dataSize && (abs(data[i] - currentMode) < EPSILON)) {
         maxTimesOccured++;
         i++;
     }
@@ -285,7 +286,7 @@ double mode(double data[]){
     i++;
     int timesOccured = 1;
     while(i < dataSize) {
-        if(Math.abs(data[i] - beingChecked) < EPSILON) { //if found another instance
+        if(abs(data[i] - beingChecked) < EPSILON) { //if found another instance
             timesOccured++;
         } else {
             if(timesOccured > maxTimesOccured) {
