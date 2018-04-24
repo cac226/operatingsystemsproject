@@ -12,12 +12,11 @@
 /*in order for the threads to function, they must be joined all at once, but called 
 one by one, they should have seperate variables they modify*/
 double mean(double data[]);
-double * sort(double data[]);
-double * minMedMax(double data[]); //returns array of min, median, and max
-double * quartile(double data[]); //returns
+double sort(double data[]);
+double minMedMax(double data[]); //returns array of min, median, and max
+double quartile(double data[]); //returns
 double sd(double data[]);
-double * merge(double firstHalf[], double secondHalf[]);
-double * mergesort(double data[]);
+double insersionSort(double data[]);
 double mode(double data[]);
 
 
@@ -191,63 +190,13 @@ double mean(double data[]) {
     return sum / numOfData;
 }
 
-//quicksort method
-double * mergesort(double data[]) {
-    //number of elements in the data set
-    int dataSize = sizeof(data)/sizeof(data[0]);
-    
-    //recursion step
-    if(dataSize < 2) {
-        return data;
-    }
-    
-    //divides into first and second half
-    double firstHalf[dataSize];
-    double secondHalf[dataSize];
-    
-    //TODO: POPULATE FIRST AND SECOND HALF ARRAYS
-    
-    //final merge step
-    return(merge(mergesort(firstHalf), mergesort(secondHalf)));
-}
-
-//merge method for mergesorting the data
-double * merge(double firstHalf[], double secondHalf[]) {
-    int i = 0;
-    int j = 0;
-    int firstSize  = sizeof(firstHalf)/sizeof(firstHalf[0]);
-    int secondSize = sizeof(secondHalf)/sizeof(secondHalf[0]);
-    double result[firstSize + secondSize];
-    
-    while(i < firstSize && j < secondSize) {
-        if(firstHalf[i] < secondHalf[j]) {
-            //i element is smaller
-            result[i + j] = firstHalf[i];
-            i++;
-        } else {
-            //j element is smaller
-            result[i + j] = secondHalf[j];
-            j++;
-        }
-    }
-    
-    //if there's still some left in the first half
-    while(i < firstSize) {
-        result[i + j] = firstHalf[i];
-        i++;
-    }
-    
-    //if there's still some left in the second half
-    while(j < secondSize) {
-        result[i + j] = secondHalf[j];
-        j++;
-    }
-    
-    return result;
+//insersion sort method
+double insersionSort(double data[]) {
+    return 0;
 }
 
 //returns sorted list of data
-double * sort(double data[]) {
+double sort(double data[]) {
     return data;
 }
 
@@ -268,15 +217,15 @@ double median(double data[]) {
 
 //indexes: min = 0, med = 1, max =2
 //finds the minimum, median and max of the data
-double * minMedMax(double data[]) { //returns array of min, median, and max
+double minMedMax(double data[]) { //returns array of min, median, and max
     //min_Med_max should be assigned the results, method does not need to return anything
-	return min_Med_max;
+	//return min_Med_max;
 }
 
 //assumes data is sorted
 //returns values that make quartiles
 //quartile data index: 0 is first quartile, 1 is second quartile
-double * quartile(double data[]) {
+double quartile(double data[]) {
     //method does not need to return anything, results should be assined to quartileData
     //quartileData[0]=
 	//quartileData[1]=
