@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <ctype.h>
 #include <unistd.h>
+#include <errno.h>
 
 /*in order for the threads to function, they must be joined all at once, but called 
 one by one, they should have seperate variables they modify*/
@@ -21,9 +22,9 @@ double mode(double data[]);
 
 double min_Med_max[3], quartileData[2];
 double mean, sd;
-double *sortedData;
+double *sortedData[];
 
-int main (){
+int main(int argc, char *argv[]){
     /*
      PLAN: by default, will return everything, if give input, then will only do some things
      */
@@ -50,6 +51,21 @@ int main (){
 	double mean, sd;
 	//alocating size of sortedData to be size of input data
 	sortedData = malloc(sizeof(data)/sizeof(data[0]));
+	//pointer to file
+	FILE *fp;
+	//checks if correct size of input has been entered
+	if (argc == 0 || argc > 1){
+		printf("Error: wrong number of arguments\n"
+				"please enter the name of the text file containing the data\n");
+	}
+	
+	if ((fp = fopen(argv[1], "r"))==NULL) {
+		printf("Cannot open file \n");
+		exit(1);
+	}
+	
+	
+	
 	//double sort[(sizeof(data)/sizeof(data[0]))], minMedmax[3], quartile[2]; 
 	printf("Choose one or more of the following operations on the data by\n"
 			"typing the corresponding number(s) separated by a space\n"
