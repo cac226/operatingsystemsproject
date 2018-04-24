@@ -20,8 +20,8 @@ double sd(double data[]);
 double mode(double data[]);
 
 
-double min_Med_max[3], quartileData[2];
-double mean, sd;
+double quartileData[2];
+double mean, sd, min, median, max;
 double *sortedData[];
 
 int main(int argc, char *argv[]){
@@ -137,7 +137,7 @@ int main(int argc, char *argv[]){
 			printf("minimum\n");
 		if (ops[5])//maximum
 			printf("maximum\n");
-		pthread_create(&tid[j], &attr, minMedMax, data);
+		pthread_create(&tid[j], &attr, NULL, data);
 		threadcount++;	
 		j++;
 	}
@@ -181,15 +181,15 @@ int main(int argc, char *argv[]){
 	if(ops[1])
 		printf("Mean = %.2f\n", mean);
 	if(ops[2])
-		printf("Median = %.2f\n", min_Med_max[1]);
+		printf("Median = %.2f\n", median);
 	if(ops[3])
 		printf("Mode = %.2f\n", mode);
 	if(ops[4])
 		printf("Standard Deviation = %.2f\n", sd);
 	if(ops[5])
-		printf("Maximum Value = %.2f\n", min_Med_max[2]);
+		printf("Maximum Value = %.2f\n", max;
 	if(ops[6])
-		printf("Minimum Value = %.2f\n", min_Med_max[0]);
+		printf("Minimum Value = %.2f\n", min);
 	if(ops[8])
 		printf("First Quartile = %.2f\n", quartileData[0]);
 	if(ops[9])
@@ -211,37 +211,33 @@ double mean(double data[]) {
     }
     return sum / numOfData;
 }
-
-//insersion sort method
-double insersionSort(double data[]) {
-    return 0;
-}
-
+               
 //returns sorted list of data
 double sort(double data[]) {
-    return data;
+    int dataSize = (sizeof(data)/sizeof(data[0]));
+    double result[dataSize];
+    
+    sortedData = result;
+    return 0;
 }
-
-
-//assumes data is sorted
-double median(double data[]) {
-    //number of elements in the data set
-    int dataSize = sizeof(data)/sizeof(data[0]);
-    
-	if(dataSize % 2 == 1) { //data size is odd
-        return data[(dataSize - 1) / 2];
-    }
-    double val1 = data[dataSize / 2]; //first middle value
-    double val2 = data[(dataSize - 2) / 2]; //second middle value
-    
-    return (val1 + val2) / 2;
-} 
 
 //indexes: min = 0, med = 1, max =2
 //finds the minimum, median and max of the data
 double minMedMax(double data[]) { //returns array of min, median, and max
-    //min_Med_max should be assigned the results, method does not need to return anything
-	//return min_Med_max;
+    //number of elements in the data set
+    int dataSize = sizeof(data)/sizeof(data[0]);
+    
+    if(dataSize % 2 == 1) { //data size is odd
+        median = data[(dataSize - 1) / 2];
+    } else { //data size is even
+        double val1 = data[dataSize / 2]; //first middle value
+        double val2 = data[(dataSize - 2) / 2]; //second middle value
+        median = (val1 + val2) / 2;
+    }
+    
+    min = data[0];
+    max = data[dataSize];
+    
 }
 
 //assumes data is sorted
@@ -251,6 +247,7 @@ double quartile(double data[]) {
     //method does not need to return anything, results should be assined to quartileData
     //quartileData[0]=
 	//quartileData[1]=
+    return 0;
 	
 }
 
@@ -260,6 +257,7 @@ double sd(double data[]) {
 }
 
 //returns the mode of the data
+//assumes data is sorted
 double mode(double data[]){
 	return 0;
 }
