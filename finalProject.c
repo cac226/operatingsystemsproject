@@ -264,7 +264,7 @@ double median(double data[]) {
     return (val1 + val2) / 2;
 } 
 
-//indexes: min = 0, med = 1, med =2
+//indexes: min = 0, med = 1, max =2
 //finds the minimum, median and max of the data
 double * minMedMax(double data[]) { //returns array of min, median, and max
     //min_Med_max should be assigned the results, method does not need to return anything
