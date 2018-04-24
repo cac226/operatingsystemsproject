@@ -250,7 +250,6 @@ double quartile(double data[]) {
     //quartileData[0]=
 	//quartileData[1]=
     return 0;
-	
 }
 
 //returns the standard deviation of the data
