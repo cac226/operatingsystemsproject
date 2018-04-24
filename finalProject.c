@@ -217,6 +217,8 @@ double sort(double data[]) {
     int dataSize = (sizeof(data)/sizeof(data[0]));
     double result[dataSize];
     
+    
+    
     sortedData = result;
     return 0;
 }
@@ -259,5 +261,35 @@ double sd(double data[]) {
 //returns the mode of the data
 //assumes data is sorted
 double mode(double data[]){
+    //TODO: Make so can account for either multiple modes, or no modes
+    int dataSize = sizeof(data)/sizeof(data[0]);
+    double EPSILON = 0.000001; //for purposes of comparing doubles
+    
+    double currentMode = data[0];
+    int maxTimesOccured = 1;
+    int i = 0;
+    while(i < dataSize && (Math.abs(data[i] - currentMode) < EPSILON)) {
+        maxTimesOccured++;
+        i++;
+    }
+    double beingChecked = data[i];
+    i++;
+    int timesOccured = 1;
+    while(i < dataSize) {
+        if(Math.abs(data[i] - beingChecked) < EPSILON) { //if found another instance
+            timesOccured++;
+        } else {
+            if(timesOccured > maxTimesOccured) {
+                maxTimesOccured = timesOccured;
+                currentMode = beingChecked;
+            }
+            
+            beingChecked = data[i];
+            timesOccured = 1;
+        }
+        i++;
+    }
+    
+    mode = currentMode;
 	return 0;
 }
