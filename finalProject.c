@@ -21,7 +21,7 @@ double mode(double data[]);
 
 
 double quartileData[2];
-double meanVal, standardDeviation, min, median, max;
+double meanVal, standardDeviation, min, median, max, mode;
 double *sortedData;
 
 int main(int argc, char *argv[]){
