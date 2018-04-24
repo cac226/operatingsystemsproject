@@ -21,7 +21,7 @@ double mode(double data[]);
 
 
 double quartileData[2];
-double meanVal, standardDeviation, min, median, max, mode;
+double meanVal, standardDeviation, min, median, max, globMode;
 double *sortedData;
 
 int main(int argc, char *argv[]){
@@ -184,7 +184,7 @@ int main(int argc, char *argv[]){
 	if(ops[2])
 		printf("Median = %.2f\n", median);
 	if(ops[3])
-		printf("Mode = %.2f\n", mode);
+		printf("Mode = %.2f\n", globMode);
 	if(ops[4])
 		printf("Standard Deviation = %.2f\n", standardDeviation);
 	if(ops[5])
@@ -301,6 +301,6 @@ double mode(double data[]){
         i++;
     }
     
-    mode = currentMode;
+    globMode = currentMode;
 	return 0;
 }
