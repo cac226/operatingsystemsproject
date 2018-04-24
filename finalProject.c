@@ -201,11 +201,13 @@ double * mergesort(double data[]) {
         return data;
     }
     
-    double firstHalf[(sizeof(data)/sizeof(data[0]))];
-    double secondHalf[(sizeof(data)/sizeof(data[0]))];
+    //divides into first and second half
+    double firstHalf[dataSize];
+    double secondHalf[dataSize];
     
+    //TODO: POPULATE FIRST AND SECOND HALF ARRAYS
     
-    
+    //final merge step
     return(merge(mergesort(firstHalf), mergesort(secondHalf)));
 }
 
