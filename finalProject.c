@@ -120,12 +120,13 @@ int main(int argc, char *argv[]){
 		
 	}
 	
+	
+	
 	int j = 0;
 	//thread creation for mean, keeping track of number of threads
-	if (ops[1]){ //mean
-		pthread_create(&tid[j], &attr, mean, &data);
-		threadcount++;
-		j++;
+	if (ops[1] || ops[4]){ //mean
+		pthread_create(&tid[5], &attr, mean, &data);
+		pthread_join(tid[5], NULL);
 	}
 	 
 	//checks if user requested median, max or min as operations
@@ -257,7 +258,7 @@ double quartile(double data[]) {
 //assumes data is sorted, and mean is found
 double sd(double data[]) {
     int dataSize = sizeof(data)/sizeof(data[0]);
-    double myMean = mean;
+    double myMean = meanVal;
     double sum = 0;
     int i;
     for(i = 0; i < dataSize; i++) {
