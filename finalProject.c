@@ -218,7 +218,26 @@ double mean(double data[]) {
 double sort(double data[]) {
     int dataSize = (sizeof(data)/sizeof(data[0]));
     double result[dataSize];
+    //first element
+    result[0] = data[0];
     
+    int i, j;
+    
+    //insersion sort
+    for(i = 1; i < dataSize; i++) {
+        int count = i;
+        while(count > 0 && result[count - 1] > data[i]) {
+            count--;
+        }
+        
+        //moves variables
+        for(j = i; j > count; j--) {
+            result[j] = result[j - 1];
+        }
+        
+        //final variable
+        result[count] = data[i];
+    }
     
     
     sortedData = result;
