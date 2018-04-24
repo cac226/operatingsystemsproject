@@ -254,7 +254,17 @@ double quartile(double data[]) {
 }
 
 //returns the standard deviation of the data
+//assumes data is sorted, and mean is found
 double sd(double data[]) {
+    int dataSize = sizeof(data)/sizeof(data[0]);
+    double myMean = mean;
+    double sum = 0;
+    int i;
+    for(i = 0; i < dataSize; i++) {
+        sum += (myMean - data[i]) * (myMean - data[i]);
+    }
+    
+    sd = sqrt(sum / dataSize);
     return 0;
 }
 
