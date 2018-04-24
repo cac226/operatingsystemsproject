@@ -22,7 +22,7 @@ double mode(double data[]);
 
 double quartileData[2];
 double mean, sd, min, median, max;
-double *sortedData[];
+double *sortedData;
 
 int main(int argc, char *argv[]){
     /*
