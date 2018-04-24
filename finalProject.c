@@ -16,11 +16,12 @@ double sort(double data[]);
 double minMedMax(double data[]); //returns array of min, median, and max
 double quartile(double data[]); //returns
 double sd(double data[]);
-double insersionSort(double data[]);
 double mode(double data[]);
 
 
 double min_Med_max[3], quartileData[2];
+double mean, sd;
+double *sortedData;
 
 int main (){
     /*
@@ -47,7 +48,8 @@ int main (){
 	pthread_attr_init(&attr);
 	//defines data that methods will return
 	double mean, sd;
-	double sort[(sizeof(data)/sizeof(data[0]))];
+	//alocating size of sortedData to be size of input data
+	sortedData = malloc(sizeof(data)/sizeof(data[0]));
 	//double sort[(sizeof(data)/sizeof(data[0]))], minMedmax[3], quartile[2]; 
 	printf("Choose one or more of the following operations on the data by\n"
 			"typing the corresponding number(s) separated by a space\n"
@@ -92,6 +94,10 @@ int main (){
 		for (i = 0; i < sizeof(list)/sizeof(list[0]); i++){
 			printf("%.2f ", list[i]);
 		}
+		for (i = 0; i < sizeof(data)/sizeof(data[0]); i++){
+			data[i] = sortedData[i];
+		}
+		
 		//sort has to sort the data before any of the methods that require sorted data run
 		pthread_create(&tid[6], &attr, *sort, &data);
 		pthread_join(tid[6], NULL);
