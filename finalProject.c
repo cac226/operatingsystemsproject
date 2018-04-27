@@ -220,27 +220,34 @@ double sort(double data[]) {
     double result[dataSize];
     //first element
     result[0] = data[0];
-    
-    int i, j;
-    
+    int i, j, count;
     //insersion sort
     for(i = 1; i < dataSize; i++) {
-        int count = i;
-        while(count > 0 && result[count - 1] > data[i]) {
-            count--;
-        }
+        printf("no error\n");
+        fflush(stdout);
+        count = i - 1;
         
-        //moves variables
+        while(count >= 0 && result[count] > data[i]) {
+            count = count - 1;
+        }
+        printf("no error\n");
+        fflush(stdout);
+    
+    //moves variables
         for(j = i; j > count; j--) {
             result[j] = result[j - 1];
         }
-        
+    
         //final variable
-        result[count] = data[i];
+        result[count + 1] = data[i];
     }
-    
-    
-    sortedData = result;
+
+    int m;
+    for(m = 0; m < dataSize; m++) {
+        sortedData[m] = result[m];
+        printf("%d", i);
+        fflush(stdout);
+    }
     return 0;
 }
 
