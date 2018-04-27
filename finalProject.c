@@ -223,15 +223,11 @@ double sort(double data[]) {
     int i, j, count;
     //insersion sort
     for(i = 1; i < dataSize; i++) {
-        printf("no error\n");
-        fflush(stdout);
         count = i - 1;
         
         while(count >= 0 && result[count] > data[i]) {
             count = count - 1;
         }
-        printf("no error\n");
-        fflush(stdout);
     
     //moves variables
         for(j = i; j > count; j--) {
