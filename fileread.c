@@ -29,16 +29,28 @@ int main(int argc, char *argv[]){
 	//data = malloc(sizeof(data)/sizeof(data[0]));
 	char str[10];
 	int i = 0;
+	int nch = 0;
 	double con = 0;
 	int badinput = 0;
+	int size = 10;
+	char *data = malloc(size);
 	while (fscanf(file, "%s", str) == 1){
-		if(isdigit(*str)){
+		if (0 >= size - 1){
+			size += 10;
+			data = realloc(data, size);
+			if(buf == NULL){
+				fprintf(stderr, "out of memory\n");
+				exit(1);
+            }
+		}
+		printf("%s", str);
+		/*if(isdigit(*str)){
 			con = atoi(str);
 			data[i] = con;
 			i++;
 		}
-			else
-				badinput = 1;
+		else*/
+		badinput = 1;
 		printf("yes: %.2f ", con);
 	}
 	for(i = 0; i < sizeof(data)/sizeof(data[0]); i++)
