@@ -5,7 +5,7 @@ main() {
    FILE *fp;
    char buff[255];
 
-   fp = fopen("/tmp/testdata.txt", "r");
+   fp = fopen("testdata.txt", "r");
    fscanf(fp, "%s", buff);
    printf("1 : %s\n", buff );
 

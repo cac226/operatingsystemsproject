@@ -15,29 +15,35 @@ int main(int argc, char *argv[]){
 		//pointer to file
 	FILE *file;
 	//checks if correct size of input has been entered
-	if (argc == 0 || argc > 1){
+	if (argc == 0){
 		printf("Error: wrong number of arguments\n"
 				"please enter the name of the text file containing the data\n");
 	}
+	printf("argc: %d\n", argc);
 	
 	if ((file = fopen(argv[1], "r"))==NULL) {
 		printf("Cannot open file \n");
 		exit(1);
 	}
-	double *data;
-	data = malloc(sizeof(data)/sizeof(data[0]));
-	char str[30];
+	double data[4];
+	//data = malloc(sizeof(data)/sizeof(data[0]));
+	char str[10];
 	int i = 0;
-	int con;
+	double con = 0;
 	int badinput = 0;
-	while (fscanf(file, "%s", str)!=EOF){
-		if (isdigit(str)){
-			con = str - '0';
+	while (fscanf(file, "%s", str) == 1){
+		if(isdigit(*str)){
+			con = atoi(str);
 			data[i] = con;
+			i++;
 		}
-		else
-			badinput = 1;
+			else
+				badinput = 1;
+		printf("yes: %.2f ", con);
 	}
+	for(i = 0; i < sizeof(data)/sizeof(data[0]); i++)
+		printf("val = %.2f", data[i]);
+	printf("here\n");
 	if(badinput)
 		printf("bad input");
 
