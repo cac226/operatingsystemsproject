@@ -32,11 +32,12 @@ int main(int argc, char *argv[]){
 	double con = 0;
 	int badinput = 0;
 	int size = 10;
-	char *data = malloc(size);
+	double *data = malloc(size);
+	
 	while (fscanf(file, "%s", str) == 1){
-		if (0 >= size - 1){
-			size += 10;
-			data = realloc(data, size);
+		if (i >= size - 1){
+			size = size + 10;
+			data = realloc(data, size * sizeof(con));
 			if(data == NULL){
 				fprintf(stderr, "out of memory\n");
 				exit(1);
@@ -44,12 +45,16 @@ int main(int argc, char *argv[]){
 		}
 		if(isdigit(*str)){
 			con = atoi(str);
-			data[i] = con;
+			data[i] = (double)con;
 			i++;
+			printf("int = %.2f\n", data[i]);
 		}
-		else
+		else{
 			badinput = 1;
+		}
 	}
+	for(i = 0; i < sizeof(data)/sizeof(data[0]); i++)
+		printf("val = %.2f\n", data[i]);
 
 	return 0;
 }
