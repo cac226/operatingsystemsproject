@@ -53,7 +53,7 @@ int main(int argc, char *argv[]){
 				"please enter the name of the text file containing the data\n");
 	}
 	
-	if ((fp = fopen(argv[1], "r"))==NULL) {
+	if ((file = fopen(argv[1], "r"))==NULL) {
 		printf("Cannot open file \n");
 		exit(1);
 	}
@@ -61,13 +61,14 @@ int main(int argc, char *argv[]){
 	file1 = fopen(argv[1], "r"); //reading in file to find size
 	char str1[10];
 	int count = 0;
-	while (fscanf(file1, "%s", str) == 1){
-		if(isdigit(*str)){
+	while (fscanf(file1, "%s", str1) == 1){
+		if(isdigit(*str1)){
 			count++;
 		}
 	}
 	double data[count]; //input data 
 	double sortedData[count]; //alocating size of sortedData to be size of input data
+	char str[10];
 	while (fscanf(file, "%s", str) == 1){
 		if(isdigit(*str)){
 			con = atoi(str);
