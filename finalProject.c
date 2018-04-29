@@ -30,36 +30,25 @@ double meanVal, standardDeviation, min, median, max, globMode;
 double *sortedData;
 
 int main(int argc, char *argv[]){
-    /*
-     PLAN: by default, will return everything, if give input, then will only do some things
-     */
-	 //data from file must be stored into array called data 
-	double data[10] = {1,3,4,55,6,21,4,5,7,10}; /* this is a temperary file for the data that will be given
-	 the values from the input file*/
-	//recives user input
-	char line[20];
-	//tokenizes input into an array
-	char *token;
-	//counter value
-	int con, i = 0;
+
+	
+	char line[20]; //recives user input
+	char *token; //tokenizes input into an array
+	int con, i = 0; //counter value
+	
 	//keeps track of requested operations on the data using 0, 1 as boolean values
-	int ops[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-	//keeps track of if user inputs non-numbers
-	int badinput = 0;
-	//keeps track of how many threads are being used
-	int threadcount = 0;
-	/* set of attributes for the thread */
-	pthread_attr_t attr; 
-	/* get the default attributes */
-	pthread_attr_init(&attr);
-	//defines data that methods will return
-	double meanVal, standardDeviation;
-	//alocating size of sortedData to be size of input data
-	sortedData = malloc(sizeof(data)/sizeof(data[0]));
-	//pointer to file
-	FILE *fp;
+	int ops[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; 
+	
+	int badinput = 0; //keeps track of if user inputs non-numbers
+	
+	int threadcount = 0; //keeps track of how many threads are being used
+	pthread_attr_t attr; // set of attributes for the thread 
+	pthread_attr_init(&attr); // get the default attributes 
+	double meanVal, standardDeviation; //defines data that methods will return
+	FILE *file; //pointer to file to read in values
+	FILE *file1; //pointer to file to find num of values to read in
 	//checks if correct size of input has been entered
-	/*if (argc == 0 || argc > 1){
+	if (argc == 0 || argc > 1){
 		printf("Error: wrong number of arguments\n"
 				"please enter the name of the text file containing the data\n");
 	}
@@ -67,10 +56,27 @@ int main(int argc, char *argv[]){
 	if ((fp = fopen(argv[1], "r"))==NULL) {
 		printf("Cannot open file \n");
 		exit(1);
-	}*/
-	
-	
-	
+	}
+	 
+	file1 = fopen(argv[1], "r"); //reading in file to find size
+	char str1[10];
+	int count = 0;
+	while (fscanf(file1, "%s", str) == 1){
+		if(isdigit(*str)){
+			count++;
+		}
+	}
+	double data[count]; //input data 
+	double sortedData[count]; //alocating size of sortedData to be size of input data
+	while (fscanf(file, "%s", str) == 1){
+		if(isdigit(*str)){
+			con = atoi(str);
+			data[i] = con;
+			i++;
+		}
+		else
+			badinput = 1;
+	}
 	//double sort[(sizeof(data)/sizeof(data[0]))], minMedmax[3], quartile[2]; 
 	printf("Choose one or more of the following operations on the data by\n"
 			"typing the corresponding number(s) separated by a space\n"
