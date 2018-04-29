@@ -20,29 +20,33 @@ int main(int argc, char *argv[]){
 				"please enter the name of the text file containing the data\n");
 	}
 	printf("argc: %d\n", argc);
+
+	
 	
 	if ((file = fopen(argv[1], "r"))==NULL) {
 		printf("Cannot open file \n");
 		exit(1);
 	}
-	//data = malloc(sizeof(data)/sizeof(data[0]));
 	char str[10];
 	int i = 0;
 	int nch = 0;
 	double con = 0;
 	int badinput = 0;
 	int size = 10;
-	char *data = malloc(size);
-	while (fscanf(file, "%s", str) == 1){
-		if (0 >= size - 1){
-			size += 10;
-			data = realloc(data, size);
-			if(data == NULL){
-				fprintf(stderr, "out of memory\n");
-				exit(1);
-            }
+	FILE *file1;
+	
+	file1 = fopen(argv[1], "r");
+	char str1[10];
+	int count = 0;
+	while (fscanf(file1, "%s", str) == 1){
+		if(isdigit(*str)){
+			count++;
 		}
-		printf("%s\n", str);
+	}
+	printf("count = %d", count);
+	
+	double data[count];
+	while (fscanf(file, "%s", str) == 1){
 		if(isdigit(*str)){
 			con = atoi(str);
 			data[i] = con;
@@ -52,6 +56,9 @@ int main(int argc, char *argv[]){
 		else
 			badinput = 1;
 	}
+	
+	for (i=0; i < sizeof(data)/sizeof(data[0]); i++)
+		printf("d: %.2f\n", data[i]);
 
 	return 0;
 }
