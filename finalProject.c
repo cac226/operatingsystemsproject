@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
 	//pointer to file
 	FILE *fp;
 	//checks if correct size of input has been entered
-	if (argc == 0 || argc > 1){
+	/*if (argc == 0 || argc > 1){
 		printf("Error: wrong number of arguments\n"
 				"please enter the name of the text file containing the data\n");
 	}
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]){
 	if ((fp = fopen(argv[1], "r"))==NULL) {
 		printf("Cannot open file \n");
 		exit(1);
-	}
+	}*/
 	
 	
 	

@@ -25,7 +25,6 @@ int main(int argc, char *argv[]){
 		printf("Cannot open file \n");
 		exit(1);
 	}
-	double data[4];
 	//data = malloc(sizeof(data)/sizeof(data[0]));
 	char str[10];
 	int i = 0;
@@ -38,26 +37,19 @@ int main(int argc, char *argv[]){
 		if (0 >= size - 1){
 			size += 10;
 			data = realloc(data, size);
-			if(buf == NULL){
+			if(data == NULL){
 				fprintf(stderr, "out of memory\n");
 				exit(1);
             }
 		}
-		printf("%s", str);
-		/*if(isdigit(*str)){
+		if(isdigit(*str)){
 			con = atoi(str);
 			data[i] = con;
 			i++;
 		}
-		else*/
-		badinput = 1;
-		printf("yes: %.2f ", con);
+		else
+			badinput = 1;
 	}
-	for(i = 0; i < sizeof(data)/sizeof(data[0]); i++)
-		printf("val = %.2f", data[i]);
-	printf("here\n");
-	if(badinput)
-		printf("bad input");
 
 	return 0;
 }
