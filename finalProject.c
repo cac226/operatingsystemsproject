@@ -108,6 +108,12 @@ int main(int argc, char *argv[]){
 		printf("Error: Bad input, you have not entered your request in the correct format\n");
 		return -1;
 	}
+    
+    /*MAKE STRUCT*/
+    struct myData mainData;
+    mainData.data = data;
+    mainData.size = sizeof(data)/sizeof(data[0]);
+    
 		
 	//if user requests all operations, set all operations to true
 	if (ops[0]){
@@ -116,19 +122,14 @@ int main(int argc, char *argv[]){
 	}
 	
 	//checks if user is requesting any operations that use a sorted list
-	if (ops[7] || ops[2] || ops[5] || ops[6] || ops[3] || ops[8] || ops[9]){ 
-		//test code
-		double list[3] = {1.0, 2.0, 3.0};
-		for (i = 0; i < sizeof(list)/sizeof(list[0]); i++){
-			printf("%.2f ", list[i]);
-		}
-		for (i = 0; i < sizeof(data)/sizeof(data[0]); i++){
-			data[i] = sortedData[i];
-		}
-		
+	if (ops[7] || ops[2] || ops[5] || ops[6] || ops[3] || ops[8] || ops[9]){
 		//sort has to sort the data before any of the methods that require sorted data run
 		pthread_create(&tid[6], &attr, *sort, &data);
 		pthread_join(tid[6], NULL);
+        
+        for (i = 0; i < sizeof(data)/sizeof(data[0]); i++){
+            data[i] = sortedData[i];
+        }
 		
 	}
 	
@@ -137,7 +138,7 @@ int main(int argc, char *argv[]){
 	int j = 0;
 	//thread creation for mean, keeping track of number of threads
 	if (ops[1] || ops[4]){ //mean
-		pthread_create(&tid[5], &attr, mean, &data);
+		pthread_create(&tid[5], &attr, mean, &mainData);
 		pthread_join(tid[5], NULL);
 	}
 	 
@@ -150,7 +151,7 @@ int main(int argc, char *argv[]){
 			printf("minimum\n");
 		if (ops[5])//maximum
 			printf("maximum\n");
-		pthread_create(&tid[j], &attr, minMedMax, data);
+		pthread_create(&tid[j], &attr, minMedMax, mainData);
 		threadcount++;	
 		j++;
 	}
@@ -158,7 +159,7 @@ int main(int argc, char *argv[]){
 	//checks if user requested mode as an operation
 	if (ops[3]){ 
 		printf("mode\n");
-		pthread_create(&tid[j], &attr, mode, &data);
+		pthread_create(&tid[j], &attr, mode, &mainData);
 		threadcount++;	
 		j++;
 	}
@@ -166,7 +167,7 @@ int main(int argc, char *argv[]){
 	//checks if user requested standard deviation as an operation
 	if (ops[4]){ 
 		printf("standard dev\n");
-		pthread_create(&tid[j], &attr, sd, &data);
+		pthread_create(&tid[j], &attr, sd, &mainData);
 		threadcount++;	
 		j++;
 	}
@@ -182,7 +183,7 @@ int main(int argc, char *argv[]){
 		if(ops[9]){
 			printf("second quartile\n");
 		}
-		pthread_create(&tid[j], &attr, quartile, &data);
+		pthread_create(&tid[j], &attr, quartile, &mainData);
 		threadcount++;
 		j++;
 	}
