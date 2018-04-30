@@ -124,7 +124,7 @@ int main(int argc, char *argv[]){
 	//checks if user is requesting any operations that use a sorted list
 	if (ops[7] || ops[2] || ops[5] || ops[6] || ops[3] || ops[8] || ops[9]){
 		//sort has to sort the data before any of the methods that require sorted data run
-		pthread_create(&tid[6], &attr, *sort, &data);
+		pthread_create(&tid[6], &attr, sort, &data);
 		pthread_join(tid[6], NULL);
         
         for (i = 0; i < sizeof(data)/sizeof(data[0]); i++){
@@ -135,7 +135,7 @@ int main(int argc, char *argv[]){
 	
 	
 	
-	int j = 0;
+	int j = 0; //keeps count of number of threads
 	//thread creation for mean, keeping track of number of threads
 	if (ops[1] || ops[4]){ //mean
 		pthread_create(&tid[5], &attr, mean, &mainData);
