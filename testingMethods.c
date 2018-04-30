@@ -177,17 +177,14 @@ void mean(struct myData *input) {
 
 //returns sorted list of data
 void sort(struct myData *input) {
-    printf("working...\n");
     int dataSize = input->size;
     double result[dataSize];
     //first element
     result[0] = input->data[0];
     int i, j, count;
     
-    printf("\n");
     //insersion sort
     for(i = 1; i < dataSize; i++) {
-        printf("working...\n");
         count = i - 1;
         
         while(count >= 0 && result[count] > input->data[i]) {
@@ -202,13 +199,11 @@ void sort(struct myData *input) {
         //final variable
         result[count + 1] = input->data[i];
     }
-    printf("\n\nworking...\n");
     int m;
     for(m = 0; m < dataSize; m++) {
         sortedData[m] = result[m];
     }
     
-    printf("\ndid sorting\n");
     fflush(stdout);
     
     pthread_exit(0);

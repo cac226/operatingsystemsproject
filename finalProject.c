@@ -226,14 +226,12 @@ void mean(struct myData *input) {
         sum += input->data[i];
     }
     double myMean = (sum / numOfData);
-    printf("Mean thing says: %.2f\n", myMean);
     meanVal = myMean;
     pthread_exit(&myMean);
 }
 
 //returns sorted list of data
 void sort(struct myData *input) {
-    printf("working...\n");
     int dataSize = input->size;
 	sortedData = malloc(input->size);
     double result[dataSize];
@@ -241,10 +239,8 @@ void sort(struct myData *input) {
     result[0] = input->data[0];
     int i, j, count;
     
-    printf("\n");
     //insersion sort
     for(i = 1; i < dataSize; i++) {
-        printf("working...\n");
         count = i - 1;
         
         while(count >= 0 && result[count] > input->data[i]) {
@@ -259,13 +255,11 @@ void sort(struct myData *input) {
         //final variable
         result[count + 1] = input->data[i];
     }
-    printf("\n\nworking...\n");
     int m;
     for(m = 0; m < dataSize; m++) {
         sortedData[m] = result[m];
     }
     
-    printf("\ndid sorting\n");
     fflush(stdout);
     
     pthread_exit(0);
@@ -275,23 +269,18 @@ void sort(struct myData *input) {
 //finds the minimum, median and max of the data
 //assumes data is sorted
 void minMedMax(struct myData *input) { //returns array of min, median, and max
-    printf("working...\n");
     //number of elements in the data set
     int dataSize = input->size;
-    printf("working...\n");
-    printf("");
     if(dataSize % 2 == 1) { //data size is odd
-        printf("working...\n");
         median = input->data[(dataSize - 1) / 2];
     } else { //data size is even
-        printf("working...\n");
         double val1 = input->data[dataSize / 2]; //first middle value
         double val2 = input->data[(dataSize - 2) / 2]; //second middle value
         median = (val1 + val2) / 2;
     }
     
     min = input->data[0];
-    max = input->data[dataSize];
+    max = input->data[dataSize - 1];
     
     pthread_exit(0);
 }
