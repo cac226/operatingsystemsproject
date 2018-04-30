@@ -13,7 +13,7 @@
 
 //struct for data
 typedef struct myData {
-    int *data;
+    double *data;
     int size;
 };
 
@@ -27,11 +27,12 @@ void sd(struct myData *input);
 void mode(struct myData *input);
 
 double quartileData[2];
-double meanVal, standardDeviation, median;
-int min, max, globMode;
+double meanVal, standardDeviation, min, median, max, globMode;
 double sortedData[];
 
 int main(int argc, char *argv[]){
+
+	
 	char line[20]; //recives user input
 	char *token; //tokenizes input into an array
 	int con, i = 0; //counter value
@@ -51,6 +52,9 @@ int main(int argc, char *argv[]){
 	if ((file = fopen(argv[1], "r"))==NULL) {
 		printf("Cannot open file. Please enter a valid file name. \n");
 		exit(1);
+    } else {
+        printf("File opened! \n");
+    }
 	 
 	file1 = fopen(argv[1], "r"); //reading in file to find size
 	char str1[10];
@@ -60,7 +64,7 @@ int main(int argc, char *argv[]){
 			count++;
 		}
 	}
-	int data[count]; //input data
+	double data[count]; //input data
     
 	//sortedData[count]; //alocating size of sortedData to be size of input data
 	char str[10];
@@ -73,6 +77,7 @@ int main(int argc, char *argv[]){
 		else
 			badinput = 1;
 	}
+	//double sort[(input->size)], minMedmax[3], quartile[2];
 	printf("\n\nChoose one or more of the following operations on the data by\n"
 			"typing the corresponding number(s) separated by a space\n\n"
 			"0)all options \n1)Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
@@ -174,13 +179,13 @@ int main(int argc, char *argv[]){
 	if(ops[2])
 		printf("Median = %.2f\n", median);
     if(ops[3])
-        printf("Mode = %d\n", globMode);
+        printf("Mode = %.2f\n", globMode);
 	if(ops[4])
 		printf("Standard Deviation = %.2f\n", standardDeviation);
 	if(ops[5])
-		printf("Maximum Value = %d\n", max);
+		printf("Maximum Value = %.2f\n", max);
 	if(ops[6])
-		printf("Minimum Value = %d\n", min);
+		printf("Minimum Value = %.2f\n", min);
 	if(ops[8])
 		printf("First Quartile = %.2f\n", quartileData[0]);
 	if(ops[9])
@@ -188,7 +193,7 @@ int main(int argc, char *argv[]){
     if(ops[7]) {
 		printf("Sorted Data:\n");
 		for (i = 0; i < mainData.size; i++){
-            printf("%d\t", mainData.data[i]);
+            printf("%.2f\t", mainData.data[i]);
             if(i % 10 == 9) {
                 printf("\n");
             }
@@ -198,26 +203,25 @@ int main(int argc, char *argv[]){
     
 	return 0;
 }
-}
 
 
 //returns the mean
 void mean(struct myData *input) {
     int numOfData = input->size;
-    int sum = 0;
+    double sum = 0;
     int i;
     for(i = 0; i < numOfData; i++) {
         sum += input->data[i];
     }
     double myMean = (sum / numOfData);
     meanVal = myMean;
-    pthread_exit(0);
+    pthread_exit(&myMean);
 }
 
 //returns sorted list of data
 void sort(struct myData *input) {
     int dataSize = input->size;
-    int result[dataSize];
+    double result[dataSize];
     
     //first element
     result[0] = input->data[0];
@@ -322,13 +326,13 @@ void mode(struct myData *input){
     //TODO: Make so can account for either multiple modes, or no modes
     int dataSize = input->size;
     double EPSILON = 0.000001; //for purposes of comparing doubles
-    int currentMode = input->data[0];
-    int beingChecked = input->data[0];
+    double currentMode = input->data[0];
+    double beingChecked = input->data[0];
     int timesOccured = 1;
     int maxTimesOccured = 0;
     int i = 1;
     while(i < dataSize) {
-        if(input->data[i] == beingChecked) { //if found another instance
+        if(abs(input->data[i] - beingChecked) < EPSILON) { //if found another instance
             timesOccured++;
         } else { //finished counting a particular value
             if(timesOccured > maxTimesOccured) {
