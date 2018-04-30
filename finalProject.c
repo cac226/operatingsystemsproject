@@ -212,7 +212,7 @@ int main(int argc, char *argv[]){
 	if(ops[7])
 		printf("Sorted Data:\n");
 		for (i = 0; i < mainData.size; i++){
-            printf("%.2f", mainData.data[i]);
+            printf("%.2f ", mainData.data[i]);
         }
 	return 0;
 	
