@@ -27,12 +27,7 @@ void sd(struct myData *input);
 void mode(struct myData *input);
 
 double quartileData[2];
-<<<<<<< HEAD
-double meanVal, standardDeviation, median;
-int min, max, globMode;
-=======
 double meanVal, standardDeviation, min, median, max, globMode;
->>>>>>> parent of c801a55... Integers :D
 double sortedData[];
 
 int main(int argc, char *argv[]){
@@ -57,6 +52,7 @@ int main(int argc, char *argv[]){
 	if ((file = fopen(argv[1], "r"))==NULL) {
 		printf("Cannot open file. Please enter a valid file name. \n");
 		exit(1);
+    }
 	 
 	file1 = fopen(argv[1], "r"); //reading in file to find size
 	char str1[10];
@@ -204,7 +200,6 @@ int main(int argc, char *argv[]){
     printf("\n\n"); //formatting
     
 	return 0;
-}
 }
 
 
