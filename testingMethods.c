@@ -69,8 +69,6 @@ int main(int argc, char *argv[]){
     
     pthread_create(&tid[0], &attr, quartile, &mainData);
     pthread_join(tid[0], NULL);
->>>>>>> parent of b8a23d4... testing
-    
     pthread_create(&tid[5], &attr, mean, &data);
     pthread_join(tid[5], &meanResult);
     
