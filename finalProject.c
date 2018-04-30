@@ -86,10 +86,6 @@ int main(int argc, char *argv[]){
 	fgets(line, 20, stdin);
 	token = strtok(line, " ");
     
-    struct myData mainData;
-    mainData.data = data;
-    mainData.size = (sizeof(data)/sizeof(data[0]));
-    
 	//reading in string, making sure only numbers were entered
 	while(token != NULL ) {
 		if (isdigit(*token)){
@@ -299,18 +295,6 @@ void quartile(struct myData *input) {
     //Yes, we could have just reuesed the "median" method, but that would have required copying over the array twice, which is eh
     double firstQuartile = 0;
     double thirdQuartile = 0;
-    if((input->size) % 4 == 0) { //if an even number of things
-        firstQuartile = (input->data[(input->size) / 4] + input->data[(input->size) / 4 - 1]) / 2;
-        thirdQuartile = (input->data[((input->size) / 4)*3] + input->data[((input->size) / 4)*3 - 1]) / 2;
-    } else if ((input->size) % 4 == 1) {
-        firstQuartile = input->data[(input->size) / 4];
-        thirdQuartile = input->data[((input->size) / 4)*3];
-    } else if ((input->size) % 4 == 2) {
-        firstQuartile = input->data[(input->size) / 4];
-        thirdQuartile = input->data[((input->size) / 4)*3 + 1];
-    } else {
-        firstQuartile = (input->data[(input->size) / 4] + input->data[(input->size) / 4 + 1]) / 2;
-        thirdQuartile = (input->data[((input->size) / 4)*3 + 1] + input->data[((input->size) / 4)*3 + 2]) / 2;
     if(input->size % 4 == 0) { //if an even number of things
         firstQuartile = (input->data[input->size / 4] + input->data[input->size / 4 - 1]) / 2;
         thirdQuartile = (input->data[(input->size / 4)*3] + input->data[(input->size / 4)*3 - 1]) / 2;
