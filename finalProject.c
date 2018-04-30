@@ -19,12 +19,12 @@ typedef struct myData {
 
 /*in order for the threads to function, they must be joined all at once, but called
  one by one, they should have seperate variables they modify*/
-void mean(double data[]);
-void sort(double data[]);
-void minMedMax(double data[]); //returns array of min, median, and max
-void quartile(double data[]); //returns
-void sd(double data[]);
-void mode(double data[]);
+void mean(struct myData *input);
+void sort(struct myData *input);
+void minMedMax(struct myData *input); //returns array of min, median, and max
+void quartile(struct myData *input); //returns
+void sd(struct myData *input);
+void mode(struct myData *input);
 
 double quartileData[2];
 double meanVal, standardDeviation, min, median, max, globMode;
@@ -108,6 +108,12 @@ int main(int argc, char *argv[]){
 		printf("Error: Bad input, you have not entered your request in the correct format\n");
 		return -1;
 	}
+    
+    /*MAKE STRUCT*/
+    struct myData mainData;
+    mainData.data = data;
+    mainData.size = sizeof(data)/sizeof(data[0]);
+    
 		
 	//if user requests all operations, set all operations to true
 	if (ops[0]){
@@ -132,7 +138,7 @@ int main(int argc, char *argv[]){
 	int j = 0; //keeps count of number of threads
 	//thread creation for mean, keeping track of number of threads
 	if (ops[1] || ops[4]){ //mean
-		pthread_create(&tid[5], &attr, mean, &data);
+		pthread_create(&tid[5], &attr, mean, &mainData);
 		pthread_join(tid[5], NULL);
 	}
 	 
@@ -145,7 +151,7 @@ int main(int argc, char *argv[]){
 			printf("minimum\n");
 		if (ops[5])//maximum
 			printf("maximum\n");
-		pthread_create(&tid[j], &attr, minMedMax, data);
+		pthread_create(&tid[j], &attr, minMedMax, mainData);
 		threadcount++;	
 		j++;
 	}
@@ -153,7 +159,7 @@ int main(int argc, char *argv[]){
 	//checks if user requested mode as an operation
 	if (ops[3]){ 
 		printf("mode\n");
-		pthread_create(&tid[j], &attr, mode, &data);
+		pthread_create(&tid[j], &attr, mode, &mainData);
 		threadcount++;	
 		j++;
 	}
@@ -161,7 +167,7 @@ int main(int argc, char *argv[]){
 	//checks if user requested standard deviation as an operation
 	if (ops[4]){ 
 		printf("standard dev\n");
-		pthread_create(&tid[j], &attr, sd, &data);
+		pthread_create(&tid[j], &attr, sd, &mainData);
 		threadcount++;	
 		j++;
 	}
@@ -177,7 +183,7 @@ int main(int argc, char *argv[]){
 		if(ops[9]){
 			printf("second quartile\n");
 		}
-		pthread_create(&tid[j], &attr, quartile, &data);
+		pthread_create(&tid[j], &attr, quartile, &mainData);
 		threadcount++;
 		j++;
 	}
@@ -211,12 +217,17 @@ int main(int argc, char *argv[]){
 
 
 //returns the mean
+<<<<<<< HEAD
 void mean(double data[]) {
     int numOfData = (sizeof(data)/sizeof(data[0]));
+=======
+void mean(struct myData *input) {
+    int numOfData = input->size;
+>>>>>>> parent of 7b45c99... removed struct
     double sum = 0;
     int i;
     for(i = 0; i < numOfData; i++) {
-        sum += data[i];
+        sum += input->data[i];
     }
     double myMean = (sum / numOfData);
     printf("Mean thing says: %.2f\n", myMean);
@@ -225,12 +236,17 @@ void mean(double data[]) {
 }
 
 //returns sorted list of data
+<<<<<<< HEAD
 void sort(double data[]) {
     int dataSize = (sizeof(data)/sizeof(data[0]));
+=======
+void sort(struct myData *input) {
+    int dataSize = input->size;
+>>>>>>> parent of 7b45c99... removed struct
     
     double result[dataSize];
     //first element
-    result[0] = data[0];
+    result[0] = input->data[0];
     int i, j, count;
     
     printf("\n");
@@ -238,7 +254,7 @@ void sort(double data[]) {
     for(i = 1; i < dataSize; i++) {
         count = i - 1;
         
-        while(count >= 0 && result[count] > data[i]) {
+        while(count >= 0 && result[count] > input->data[i]) {
             count = count - 1;
         }
         
@@ -248,7 +264,7 @@ void sort(double data[]) {
         }
         
         //final variable
-        result[count + 1] = data[i];
+        result[count + 1] = input->data[i];
     }
     
     int m;
@@ -264,20 +280,24 @@ void sort(double data[]) {
 //indexes: min = 0, med = 1, max =2
 //finds the minimum, median and max of the data
 //assumes data is sorted
-void minMedMax(double data[]) { //returns array of min, median, and max
+void minMedMax(struct myData *input) { //returns array of min, median, and max
     //number of elements in the data set
+<<<<<<< HEAD
     int dataSize = (sizeof(data)/sizeof(data[0]));
+=======
+    int dataSize = input->size;
+>>>>>>> parent of 7b45c99... removed struct
     
     if(dataSize % 2 == 1) { //data size is odd
-        median = data[(dataSize - 1) / 2];
+        median = input->data[(dataSize - 1) / 2];
     } else { //data size is even
-        double val1 = data[dataSize / 2]; //first middle value
-        double val2 = data[(dataSize - 2) / 2]; //second middle value
+        double val1 = input->data[dataSize / 2]; //first middle value
+        double val2 = input->data[(dataSize - 2) / 2]; //second middle value
         median = (val1 + val2) / 2;
     }
     
-    min = data[0];
-    max = data[dataSize];
+    min = input->data[0];
+    max = input->data[dataSize];
     
     pthread_exit(0);
 }
@@ -285,10 +305,11 @@ void minMedMax(double data[]) { //returns array of min, median, and max
 //assumes data is sorted
 //returns values that make quartiles
 //quartile data index: 0 is first quartile, 1 is third quartile
-void quartile(double data[]) {
+void quartile(struct myData *input) {
     //Yes, we could have just reuesed the "median" method, but that would have required copying over the array twice, which is eh
     double firstQuartile = 0;
     double thirdQuartile = 0;
+<<<<<<< HEAD
     if((sizeof(data)/sizeof(data[0])) % 4 == 0) { //if an even number of things
         firstQuartile = (data[(sizeof(data)/sizeof(data[0])) / 4] + data[(sizeof(data)/sizeof(data[0])) / 4 - 1]) / 2;
         thirdQuartile = (data[((sizeof(data)/sizeof(data[0])) / 4)*3] + data[((sizeof(data)/sizeof(data[0])) / 4)*3 - 1]) / 2;
@@ -301,6 +322,18 @@ void quartile(double data[]) {
     } else {
         firstQuartile = (data[(sizeof(data)/sizeof(data[0])) / 4] + data[(sizeof(data)/sizeof(data[0])) / 4 + 1]) / 2;
         thirdQuartile = (data[((sizeof(data)/sizeof(data[0])) / 4)*3 + 1] + data[((sizeof(data)/sizeof(data[0])) / 4)*3 + 2]) / 2;
+    if(input->size % 4 == 0) { //if an even number of things
+        firstQuartile = (input->data[input->size / 4] + input->data[input->size / 4 - 1]) / 2;
+        thirdQuartile = (input->data[(input->size / 4)*3] + input->data[(input->size / 4)*3 - 1]) / 2;
+    } else if (input->size % 4 == 1) {
+        firstQuartile = input->data[input->size / 4];
+        thirdQuartile = input->data[(input->size / 4)*3];
+    } else if (input->size % 4 == 2) {
+        firstQuartile = input->data[input->size / 4];
+        thirdQuartile = input->data[(input->size / 4)*3 + 1];
+    } else {
+        firstQuartile = (input->data[input->size / 4] + input->data[input->size / 4 + 1]) / 2;
+        thirdQuartile = (input->data[(input->size / 4)*3 + 1] + input->data[(input->size / 4)*3 + 2]) / 2;
     }
     
     quartileData[0] = firstQuartile;
@@ -311,13 +344,16 @@ void quartile(double data[]) {
 
 //returns the standard deviation of the data
 //assumes data is sorted, and mean is found
+<<<<<<< HEAD
 void sd(double data[]) {
     int dataSize = (sizeof(data)/sizeof(data[0]));
+void sd(struct myData *input) {
+    int dataSize = input->size;
     double myMean = meanVal;
     double sum = 0;
     int i;
     for(i = 0; i < dataSize; i++) {
-        sum += (myMean - data[i]) * (myMean - data[i]);
+        sum += (myMean - input->data[i]) * (myMean - input->data[i]);
     }
     
     standardDeviation = sqrt(sum / dataSize);
@@ -326,23 +362,27 @@ void sd(double data[]) {
 
 //returns the mode of the data
 //assumes data is sorted
-void mode(double data[]){
+void mode(struct myData *input){
     //TODO: Make so can account for either multiple modes, or no modes
+<<<<<<< HEAD
     int dataSize = (sizeof(data)/sizeof(data[0]));
+=======
+    int dataSize = input->size;
+>>>>>>> parent of 7b45c99... removed struct
     double EPSILON = 0.000001; //for purposes of comparing doubles
     
-    double currentMode = data[0];
+    double currentMode = input->data[0];
     int maxTimesOccured = 1;
     int i = 0;
-    while(i < dataSize && (abs(data[i] - currentMode) < EPSILON)) {
+    while(i < dataSize && (abs(input->data[i] - currentMode) < EPSILON)) {
         maxTimesOccured++;
         i++;
     }
-    double beingChecked = data[i];
+    double beingChecked = input->data[i];
     i++;
     int timesOccured = 1;
     while(i < dataSize) {
-        if(abs(data[i] - beingChecked) < EPSILON) { //if found another instance
+        if(abs(input->data[i] - beingChecked) < EPSILON) { //if found another instance
             timesOccured++;
         } else {
             if(timesOccured > maxTimesOccured) {
@@ -350,7 +390,7 @@ void mode(double data[]){
                 currentMode = beingChecked;
             }
             
-            beingChecked = data[i];
+            beingChecked = input->data[i];
             timesOccured = 1;
         }
         i++;
