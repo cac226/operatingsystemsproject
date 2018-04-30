@@ -213,7 +213,7 @@ int main(int argc, char *argv[]){
 
 //returns the mean
 void mean(double data[]) {
-    int numOfData = (sizeof(data)/sizeof(data[0]);
+    int numOfData = (sizeof(data)/sizeof(data[0]));
     double sum = 0;
     int i;
     for(i = 0; i < numOfData; i++) {
@@ -227,7 +227,7 @@ void mean(double data[]) {
 
 //returns sorted list of data
 void sort(double data[]) {
-    int dataSize = (sizeof(data)/sizeof(data[0]);
+    int dataSize = (sizeof(data)/sizeof(data[0]));
     
     double result[dataSize];
     //first element
@@ -267,7 +267,7 @@ void sort(double data[]) {
 //assumes data is sorted
 void minMedMax(double data[]) { //returns array of min, median, and max
     //number of elements in the data set
-    int dataSize = (sizeof(data)/sizeof(data[0]);
+    int dataSize = (sizeof(data)/sizeof(data[0]));
     
     if(dataSize % 2 == 1) { //data size is odd
         median = data[(dataSize - 1) / 2];
@@ -290,18 +290,18 @@ void quartile(double data[]) {
     //Yes, we could have just reuesed the "median" method, but that would have required copying over the array twice, which is eh
     double firstQuartile = 0;
     double thirdQuartile = 0;
-    if((sizeof(data)/sizeof(data[0]) % 4 == 0) { //if an even number of things
-        firstQuartile = (data[(sizeof(data)/sizeof(data[0]) / 4] + data[(sizeof(data)/sizeof(data[0]) / 4 - 1]) / 2;
-        thirdQuartile = (data[((sizeof(data)/sizeof(data[0]) / 4)*3] + data[((sizeof(data)/sizeof(data[0]) / 4)*3 - 1]) / 2;
-    } else if ((sizeof(data)/sizeof(data[0]) % 4 == 1) {
-        firstQuartile = data[(sizeof(data)/sizeof(data[0]) / 4];
-        thirdQuartile = data[((sizeof(data)/sizeof(data[0]) / 4)*3];
-    } else if ((sizeof(data)/sizeof(data[0]) % 4 == 2) {
-        firstQuartile = data[(sizeof(data)/sizeof(data[0]) / 4];
-        thirdQuartile = data[((sizeof(data)/sizeof(data[0]) / 4)*3 + 1];
+    if((sizeof(data)/sizeof(data[0])) % 4 == 0) { //if an even number of things
+        firstQuartile = (data[(sizeof(data)/sizeof(data[0])) / 4] + data[(sizeof(data)/sizeof(data[0])) / 4 - 1]) / 2;
+        thirdQuartile = (data[((sizeof(data)/sizeof(data[0])) / 4)*3] + data[((sizeof(data)/sizeof(data[0])) / 4)*3 - 1]) / 2;
+    } else if ((sizeof(data)/sizeof(data[0])) % 4 == 1) {
+        firstQuartile = data[(sizeof(data)/sizeof(data[0])) / 4];
+        thirdQuartile = data[((sizeof(data)/sizeof(data[0])) / 4)*3];
+    } else if ((sizeof(data)/sizeof(data[0])) % 4 == 2) {
+        firstQuartile = data[(sizeof(data)/sizeof(data[0])) / 4];
+        thirdQuartile = data[((sizeof(data)/sizeof(data[0])) / 4)*3 + 1];
     } else {
-        firstQuartile = (data[(sizeof(data)/sizeof(data[0]) / 4] + data[(sizeof(data)/sizeof(data[0]) / 4 + 1]) / 2;
-        thirdQuartile = (data[((sizeof(data)/sizeof(data[0]) / 4)*3 + 1] + data[((sizeof(data)/sizeof(data[0]) / 4)*3 + 2]) / 2;
+        firstQuartile = (data[(sizeof(data)/sizeof(data[0])) / 4] + data[(sizeof(data)/sizeof(data[0])) / 4 + 1]) / 2;
+        thirdQuartile = (data[((sizeof(data)/sizeof(data[0])) / 4)*3 + 1] + data[((sizeof(data)/sizeof(data[0])) / 4)*3 + 2]) / 2;
     }
     
     quartileData[0] = firstQuartile;
@@ -313,7 +313,7 @@ void quartile(double data[]) {
 //returns the standard deviation of the data
 //assumes data is sorted, and mean is found
 void sd(double data[]) {
-    int dataSize = (sizeof(data)/sizeof(data[0]);
+    int dataSize = (sizeof(data)/sizeof(data[0]));
     double myMean = meanVal;
     double sum = 0;
     int i;
@@ -329,7 +329,7 @@ void sd(double data[]) {
 //assumes data is sorted
 void mode(double data[]){
     //TODO: Make so can account for either multiple modes, or no modes
-    int dataSize = (sizeof(data)/sizeof(data[0]);
+    int dataSize = (sizeof(data)/sizeof(data[0]));
     double EPSILON = 0.000001; //for purposes of comparing doubles
     
     double currentMode = data[0];
