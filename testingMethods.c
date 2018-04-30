@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <sys/types.h>
+#include <pthread.h>
 #include <sys/wait.h>
 #include <ctype.h>
 #include <unistd.h>
@@ -39,7 +40,7 @@ int main(int argc, char *argv[]){
      PLAN: by default, will return everything, if give input, then will only do some things
      */
 	 //data from file must be stored into array called data 
-	double data[10] = {1,3,4,55,6,21,4,5,7,10};
+	double data[6] = {1, 2, 3, 4, 5, 6};
     
     struct myData mainData;
     mainData.size = (sizeof(data)/sizeof(data[0]));
@@ -58,17 +59,14 @@ int main(int argc, char *argv[]){
 	//initialize thread ids
 	pthread_t tid[6];
     
-    pthread_create(&tid[0], &attr, mean, &mainData);
-    void *result;
-    pthread_join(tid[0], &result);
-    meanVal = *(double*) result;
-    printf("\n Mean: %.2f \n\n", meanVal);
-    fflush(stdout);
+    pthread_create(&tid[0], &attr, quartile, &mainData);
+    pthread_join(tid[0], NULL);
+    
     /*
     //sort has to sort the data before any of the methods that require sorted data run
     pthread_create(&tid[0], &attr, sort, &mainData);
     sleep(1);
-    pthread_join(tid[0], NULL);
+    
     printf("\ndid\n\n");
     fflush(stdout);*/
     /*
@@ -153,9 +151,32 @@ void minMedMax(struct myData *input) { //returns array of min, median, and max
 //returns values that make quartiles
 //quartile data index: 0 is first quartile, 1 is second quartile
 void quartile(struct myData *input) {
-    //method does not need to return anything, results should be assined to quartileData
-    //quartileData[0]=
-    //quartileData[1]=
+    //Yes, we could have just reuesed the "median" method, but that would have required copying over the array twice, which is eh
+    int i;
+    for(i = 0; i < input->size; i++) {
+        printf("%.1f ", input->data[i]);
+    }
+    printf("\n\n");
+    
+    double firstQuartile = 0;
+    double thirdQuartile = 0;
+    if(input->size % 4 == 0) { //if an even number of things
+        firstQuartile = (input->data[input->size / 4] + input->data[input->size / 4 - 1]) / 2;
+        thirdQuartile = (input->data[(input->size / 4)*3] + input->data[(input->size / 4)*3 - 1]) / 2;
+    } else if (input->size % 4 == 1) {
+        firstQuartile = input->data[input->size / 4];
+        thirdQuartile = input->data[(input->size / 4)*3];
+    } else if (input->size % 4 == 2) {
+        firstQuartile = input->data[input->size / 4];
+        thirdQuartile = input->data[(input->size / 4)*3 + 1];
+    } else {
+        firstQuartile = (input->data[input->size / 4] + input->data[input->size / 4 + 1]) / 2;
+        thirdQuartile = (input->data[(input->size / 4)*3 + 1] + input->data[(input->size / 4)*3 + 2]) / 2;
+    }
+    
+    quartileData[0] = firstQuartile;
+    quartileData[1] = thirdQuartile;
+    
     pthread_exit(0);
 }
 

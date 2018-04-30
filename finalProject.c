@@ -269,6 +269,7 @@ void sort(struct myData *input) {
 
 //indexes: min = 0, med = 1, max =2
 //finds the minimum, median and max of the data
+//assumes data is sorted
 void minMedMax(struct myData *input) { //returns array of min, median, and max
     //number of elements in the data set
     int dataSize = input->size;
@@ -289,11 +290,28 @@ void minMedMax(struct myData *input) { //returns array of min, median, and max
 
 //assumes data is sorted
 //returns values that make quartiles
-//quartile data index: 0 is first quartile, 1 is second quartile
+//quartile data index: 0 is first quartile, 1 is third quartile
 void quartile(struct myData *input) {
-    //method does not need to return anything, results should be assined to quartileData
-    //quartileData[0]=
-    //quartileData[1]=
+    //Yes, we could have just reuesed the "median" method, but that would have required copying over the array twice, which is eh
+    double firstQuartile = 0;
+    double thirdQuartile = 0;
+    if(input->size % 4 == 0) { //if an even number of things
+        firstQuartile = (input->data[input->size / 4] + input->data[input->size / 4 - 1]) / 2;
+        thirdQuartile = (input->data[(input->size / 4)*3] + input->data[(input->size / 4)*3 - 1]) / 2;
+    } else if (input->size % 4 == 1) {
+        firstQuartile = input->data[input->size / 4];
+        thirdQuartile = input->data[(input->size / 4)*3];
+    } else if (input->size % 4 == 2) {
+        firstQuartile = input->data[input->size / 4];
+        thirdQuartile = input->data[(input->size / 4)*3 + 1];
+    } else {
+        firstQuartile = (input->data[input->size / 4] + input->data[input->size / 4 + 1]) / 2;
+        thirdQuartile = (input->data[(input->size / 4)*3 + 1] + input->data[(input->size / 4)*3 + 2]) / 2;
+    }
+    
+    quartileData[0] = firstQuartile;
+    quartileData[1] = thirdQuartile;
+    
     pthread_exit(0);
 }
 
