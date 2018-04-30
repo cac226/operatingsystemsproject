@@ -28,136 +28,39 @@ void mode(struct myData *input);
 
 double quartileData[2];
 double meanVal, standardDeviation, min, median, max, globMode;
-double *sortedData;
+double sortedData[];
 
 int main(int argc, char *argv[]){
-    
-    
-    char line[20]; //recives user input
-    char *token; //tokenizes input into an array
-    int con, i = 0; //counter value
-    
-    //keeps track of requested operations on the data using 0, 1 as boolean values
-    int ops[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    
-    int badinput = 0; //keeps track of if user inputs non-numbers
-    
+    printf("sorted stuff");
     int threadcount = 0; //keeps track of how many threads are being used
     pthread_attr_t attr; // set of attributes for the thread
     pthread_attr_init(&attr); // get the default attributes
-    FILE *file; //pointer to file to read in values
-    FILE *file1; //pointer to file to find num of values to read in
-    //checks if correct size of input has been entered
-    if (argc == 0 || argc > 1){
-        printf("Error: wrong number of arguments\n"
-               "please enter the name of the text file containing the data\n");
-    }
     
-    if ((file = fopen(argv[1], "r"))==NULL) {
-        printf("Cannot open file \n");
-        exit(1);
-    }
+    median = 2;
     
-    file1 = fopen(argv[1], "r"); //reading in file to find size
-    char str1[10];
-    int count = 0;
-    while (fscanf(file1, "%s", str1) == 1){
-        if(isdigit(*str1)){
-            count++;
-        }
-    }
-    double data[count]; //input data
-    sortedData[count]; //alocating size of sortedData to be size of input data
-    
-    
+    double data[10] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1}; //input data
     //initialize thread ids
     pthread_t tid[6];
     
     /*MAKE STRUCT*/
     struct myData mainData;
     mainData.data = data;
-    mainData.size = sizeof(data)/sizeof(data[0]);
+    mainData.size = (sizeof(data)/sizeof(data[0]));
     
+    sortedData[mainData.size];
+    printf("will sort stuff\n");
+    pthread_create(&tid[0], &attr, sort, &mainData);
+    pthread_join(tid[0], NULL);
+    printf("sorted stuff\n");
     
+    mainData.data = sortedData;
     
-    int j = 0; //keeps count of number of threads
-    //thread creation for mean, keeping track of number of threads
-    if (ops[1] || ops[4]){ //mean
-        pthread_create(&tid[5], &attr, mean, &mainData);
-        pthread_join(tid[5], NULL);
-    }
+    pthread_create(&tid[1], &attr, minMedMax, &mainData);
+    pthread_join(tid[1], NULL);
     
-    //checks if user requested median, max or min as operations
-    if ((ops[2] || ops[5]) || ops[6]){ //median, max, min
-        
-        if (ops[2])//median
-            printf("median\n");
-        if (ops[6]) //minumum
-            printf("minimum\n");
-        if (ops[5])//maximum
-            printf("maximum\n");
-        pthread_create(&tid[j], &attr, minMedMax, &mainData);
-        threadcount++;
-        j++;
-    }
-    
-    //checks if user requested mode as an operation
-    if (ops[3]){
-        printf("mode\n");
-        pthread_create(&tid[j], &attr, mode, &mainData);
-        threadcount++;
-        j++;
-    }
-    
-    //checks if user requested standard deviation as an operation
-    if (ops[4]){
-        printf("standard dev\n");
-        pthread_create(&tid[j], &attr, sd, &mainData);
-        threadcount++;
-        j++;
-    }
-    
-    
-    //checks if user requested first quartile or second quartiles as operations
-    if (ops[8] || ops[9]){
-        //first quartile
-        if(ops[8]){
-            printf("first quartile\n");
-        }
-        //second quartile
-        if(ops[9]){
-            printf("second quartile\n");
-        }
-        pthread_create(&tid[j], &attr, quartile, &mainData);
-        threadcount++;
-        j++;
-    }
-    
-    for (i = 0; i < threadcount; i++)
-        pthread_join(tid[i], NULL);
-    
-    //print statements for results
-    if(ops[1])
-        printf("Mean = %.2f\n", meanVal);
-    if(ops[2])
-        printf("Median = %.2f\n", median);
-    if(ops[3])
-        printf("Mode = %.2f\n", globMode);
-    if(ops[4])
-        printf("Standard Deviation = %.2f\n", standardDeviation);
-    if(ops[5])
-        printf("Maximum Value = %.2f\n", max);
-    if(ops[6])
-        printf("Minimum Value = %.2f\n", min);
-    if(ops[8])
-        printf("First Quartile = %.2f\n", quartileData[0]);
-    if(ops[9])
-        printf("Third Quartile = %.2f\n", quartileData[1]);
-    
+    printf("Median: %.2f", median);
+
     return 0;
-    
-    
-    
 }
 
 
@@ -170,7 +73,6 @@ void mean(struct myData *input) {
         sum += input->data[i];
     }
     double myMean = (sum / numOfData);
-    printf("Mean thing says: %.2f\n", myMean);
     meanVal = myMean;
     pthread_exit(&myMean);
 }
@@ -179,16 +81,19 @@ void mean(struct myData *input) {
 void sort(struct myData *input) {
     int dataSize = input->size;
     double result[dataSize];
+    
     //first element
     result[0] = input->data[0];
+    
     int i, j, count;
     
     //insersion sort
     for(i = 1; i < dataSize; i++) {
         count = i - 1;
         
+        //finds proper place
         while(count >= 0 && result[count] > input->data[i]) {
-            count = count - 1;
+            count--;
         }
         
         //moves variables
@@ -198,14 +103,15 @@ void sort(struct myData *input) {
         
         //final variable
         result[count + 1] = input->data[i];
+        
+        int p;
     }
+    
+    //moves into sortedData
     int m;
     for(m = 0; m < dataSize; m++) {
         sortedData[m] = result[m];
     }
-    
-    fflush(stdout);
-    
     pthread_exit(0);
 }
 
@@ -213,23 +119,29 @@ void sort(struct myData *input) {
 //finds the minimum, median and max of the data
 //assumes data is sorted
 void minMedMax(struct myData *input) { //returns array of min, median, and max
-    printf("working...\n");
     //number of elements in the data set
     int dataSize = input->size;
-    printf("working...\n");
-    printf("");
+    printf("Size: %d\n", dataSize);
+    fflush(stdout);
+    printf("Min testing: \n");
+    int i;
+    for(i = 0; i < dataSize; i++) {
+        printf("%.2f, ", input->data[i]);
+    }
+    printf("okay...%.2f, %d\n\n", median, (dataSize % 2));
     if(dataSize % 2 == 1) { //data size is odd
-        printf("working...\n");
         median = input->data[(dataSize - 1) / 2];
     } else { //data size is even
-        printf("working...\n");
+        printf("okay pt 2...%.2f, %d\n\n", median, (dataSize % 2));
         double val1 = input->data[dataSize / 2]; //first middle value
         double val2 = input->data[(dataSize - 2) / 2]; //second middle value
+        printf("okay pt 3 %.2f, %d\n\n", median);
         median = (val1 + val2) / 2;
+        printf("okay...%.2f, %d\n\n", median);
     }
     
     min = input->data[0];
-    max = input->data[dataSize];
+    max = input->data[dataSize - 1];
     
     pthread_exit(0);
 }
