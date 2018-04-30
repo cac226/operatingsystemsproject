@@ -161,7 +161,7 @@ int main(int argc, char *argv[]){
 	 
 	//checks if user requested median, max or min as operations
 	if ((ops[2] || ops[5]) || ops[6]){ //median, max, min
-        printf("\nworks\n\n");
+        printf("\going in...\n\n");
 		pthread_create(&tid[j], &attr, minMedMax, &mainData);
 		threadcount++;	
 		j++;
