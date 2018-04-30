@@ -114,7 +114,7 @@ int main(int argc, char *argv[]){
     /*MAKE STRUCT*/
     struct myData mainData;
     mainData.data = data;
-    mainData.size = sizeof(data)/sizeof(data[0]);
+    mainData.size = (sizeof(data)/sizeof(data[0]));
     
 		
 	//if user requests all operations, set all operations to true
@@ -131,8 +131,13 @@ int main(int argc, char *argv[]){
         
         for (i = 0; i < mainData.size; i++){
             mainData.data[i] = sortedData[i];
+            printf("%.2f, ", mainData.data[i]);
         }
 	}
+    
+    printf("\n%.2f\n\n", mainData.data[3]);
+    
+    
 	
 	
 	
@@ -166,7 +171,7 @@ int main(int argc, char *argv[]){
 	
 
 	//checks if user requested first quartile or second quartiles as operations
-	if (ops[8] || ops[9]){ 
+	if (ops[8] || ops[9]){
 		pthread_create(&tid[j], &attr, quartile, &mainData);
 		threadcount++;
 		j++;
@@ -195,7 +200,7 @@ int main(int argc, char *argv[]){
 	if(ops[7])
 		printf("Sorted Data:\n");
 		for (i = 0; i < mainData.size; i++){
-            printf("%.2f", mainData.data[i]);
+            printf("%.2f, ", mainData.data[i]);
         }
 	return 0;
 	
@@ -226,12 +231,13 @@ void sort(struct myData *input) {
     result[0] = input->data[0];
     int i, j, count;
     
+    printf("\n%.2f\n", result[0]);
     //insersion sort
     for(i = 1; i < dataSize; i++) {
         count = i - 1;
         
         while(count >= 0 && result[count] > input->data[i]) {
-            count = count - 1;
+            count--;
         }
         
         //moves variables
@@ -241,14 +247,19 @@ void sort(struct myData *input) {
         
         //final variable
         result[count + 1] = input->data[i];
+        
+        int p;
+        for(p = 0; p <= i; p++) {
+            printf("\n%.2f, ", result[p]);
+        }
+        printf("\n");
     }
     int m;
     for(m = 0; m < dataSize; m++) {
         sortedData[m] = result[m];
     }
     
-    fflush(stdout);
-    
+    printf("%.2f, %.2f\n\n", sortedData[3], result[3]);
     pthread_exit(0);
 }
 
