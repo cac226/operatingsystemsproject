@@ -233,6 +233,7 @@ void mean(struct myData *input) {
 void sort(struct myData *input) {
     printf("working...\n");
     int dataSize = input->size;
+	sortedData = malloc(input->size);
     double result[dataSize];
     //first element
     result[0] = input->data[0];
