@@ -145,13 +145,6 @@ int main(int argc, char *argv[]){
 	 
 	//checks if user requested median, max or min as operations
 	if ((ops[2] || ops[5]) || ops[6]){ //median, max, min
-		
-		if (ops[2])//median
-			printf("median\n");
-		if (ops[6]) //minumum
-			printf("minimum\n");
-		if (ops[5])//maximum
-			printf("maximum\n");
 		pthread_create(&tid[j], &attr, minMedMax, &mainData);
 		threadcount++;	
 		j++;
@@ -159,7 +152,6 @@ int main(int argc, char *argv[]){
 	
 	//checks if user requested mode as an operation
 	if (ops[3]){ 
-		printf("mode\n");
 		pthread_create(&tid[j], &attr, mode, &mainData);
 		threadcount++;	
 		j++;
@@ -167,7 +159,6 @@ int main(int argc, char *argv[]){
 	
 	//checks if user requested standard deviation as an operation
 	if (ops[4]){ 
-		printf("standard dev\n");
 		pthread_create(&tid[j], &attr, sd, &mainData);
 		threadcount++;	
 		j++;
@@ -176,14 +167,6 @@ int main(int argc, char *argv[]){
 
 	//checks if user requested first quartile or second quartiles as operations
 	if (ops[8] || ops[9]){ 
-		//first quartile
-		if(ops[8]){
-			printf("first quartile\n");
-		}
-		//second quartile
-		if(ops[9]){
-			printf("second quartile\n");
-		}
 		pthread_create(&tid[j], &attr, quartile, &mainData);
 		threadcount++;
 		j++;
