@@ -67,7 +67,6 @@ int main(int argc, char *argv[]){
 		}
 	}
 	double data[count]; //input data 
-	double sortedData[count]; //alocating size of sortedData to be size of input data
 	char str[10];
 	while (fscanf(file, "%s", str) == 1){
 		if(isdigit(*str)){
@@ -128,7 +127,7 @@ int main(int argc, char *argv[]){
 		pthread_create(&tid[6], &attr, sort, &mainData);
 		pthread_join(tid[6], NULL);
         
-        for (i = 0; i < sizeof(data)/sizeof(data[0]); i++){
+        for (i = 0; i < sizeof(mainData.data)/sizeof(mainData.data[0]); i++){
             mainData.data[i] = sortedData[i];
         }
 	}
