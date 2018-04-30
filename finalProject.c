@@ -19,16 +19,16 @@ typedef struct myData {
 
 /*in order for the threads to function, they must be joined all at once, but called
  one by one, they should have seperate variables they modify*/
-void mean(struct myData *input);
-void sort(struct myData *input);
-void minMedMax(struct myData *input); //returns array of min, median, and max
-void quartile(struct myData *input); //returns
-void sd(struct myData *input);
-void mode(struct myData *input);
+void *mean(struct myData *input);
+void *sort(struct myData *input);
+void *minMedMax(struct myData *input); //returns array of min, median, and max
+void *quartile(struct myData *input); //returns
+void *sd(struct myData *input);
+void *mode(struct myData *input);
 
 double quartileData[2];
 double meanVal, standardDeviation, min, median, max, globMode;
-double *sortedData;
+struct myData sortedData;
 
 int main(int argc, char *argv[]){
 
@@ -66,9 +66,9 @@ int main(int argc, char *argv[]){
 			count++;
 		}
 	}
-	double data[count]; //input data 
+	double data[count]; //input data
+    
 	//sortedData[count]; //alocating size of sortedData to be size of input data
-    printf("Sor");
 	char str[10];
 	while (fscanf(file, "%s", str) == 1){
 		if(isdigit(*str)){
@@ -116,7 +116,9 @@ int main(int argc, char *argv[]){
     mainData.data = data;
     mainData.size = (sizeof(data)/sizeof(data[0]));
     
-		
+    sortedData.data = malloc(mainData.size);
+    sortedData.size = (mainData.size);
+    
 	//if user requests all operations, set all operations to true
 	if (ops[0]){
 		for (i = 1; i < sizeof(ops)/sizeof(ops[0]); i++)
@@ -128,15 +130,24 @@ int main(int argc, char *argv[]){
 		//sort has to sort the data before any of the methods that require sorted data run
 		pthread_create(&tid[6], &attr, sort, &mainData);
 		pthread_join(tid[6], NULL);
+        printf("finished sorting\n\n");
         
-        for (i = 0; i < mainData.size; i++){
+        mainData.data = sortedData.data;
+        /*
+        int temp = mainData.size;
+        
+        for (i = 0; i < temp; i++){
             mainData.data[i] = sortedData[i];
-            printf("%.2f, ", mainData.data[i]);
-        }
+        }*/
+        
+        mainData.size = sortedData.size;
 	}
     
-    printf("\n%.2f\n\n", mainData.data[3]);
+    for(i = 0; i < mainData.size; i++) {
+        printf("%.2f, ", mainData.data[i]);
+    }
     
+    printf("\nSize: %d\n\n", mainData.size);
     
 	
 	
@@ -150,6 +161,7 @@ int main(int argc, char *argv[]){
 	 
 	//checks if user requested median, max or min as operations
 	if ((ops[2] || ops[5]) || ops[6]){ //median, max, min
+        printf("\nworks\n\n");
 		pthread_create(&tid[j], &attr, minMedMax, &mainData);
 		threadcount++;	
 		j++;
@@ -176,7 +188,8 @@ int main(int argc, char *argv[]){
 		threadcount++;
 		j++;
 	}
-		
+	
+    //rejoins all threads
 	for (i = 0; i < threadcount; i++)
 		pthread_join(tid[i], NULL);
 	
@@ -210,7 +223,7 @@ int main(int argc, char *argv[]){
 
 
 //returns the mean
-void mean(struct myData *input) {
+void *mean(struct myData *input) {
     int numOfData = input->size;
     double sum = 0;
     int i;
@@ -223,19 +236,20 @@ void mean(struct myData *input) {
 }
 
 //returns sorted list of data
-void sort(struct myData *input) {
+void *sort(struct myData *input) {
     int dataSize = input->size;
-	sortedData = malloc(input->size);
     double result[dataSize];
+    
     //first element
     result[0] = input->data[0];
+    
     int i, j, count;
     
-    printf("\n%.2f\n", result[0]);
     //insersion sort
     for(i = 1; i < dataSize; i++) {
         count = i - 1;
         
+        //finds proper place
         while(count >= 0 && result[count] > input->data[i]) {
             count--;
         }
@@ -249,26 +263,30 @@ void sort(struct myData *input) {
         result[count + 1] = input->data[i];
         
         int p;
-        for(p = 0; p <= i; p++) {
-            printf("\n%.2f, ", result[p]);
-        }
-        printf("\n");
-    }
-    int m;
-    for(m = 0; m < dataSize; m++) {
-        sortedData[m] = result[m];
     }
     
-    printf("%.2f, %.2f\n\n", sortedData[3], result[3]);
+    //moves into sortedData
+    int m;
+    for(m = 0; m < dataSize; m++) {
+        sortedData.data[m] = result[m];
+    }
     pthread_exit(0);
 }
 
 //indexes: min = 0, med = 1, max =2
 //finds the minimum, median and max of the data
 //assumes data is sorted
-void minMedMax(struct myData *input) { //returns array of min, median, and max
+void *minMedMax(struct myData *input) { //returns array of min, median, and max
     //number of elements in the data set
+    printf("aaaa started");
     int dataSize = input->size;
+    
+    printf("Min testing: \n");
+    int i;
+    for(i = 0; i < dataSize; i++) {
+        printf("%.2f, ", input->data[i]);
+    }
+    
     if(dataSize % 2 == 1) { //data size is odd
         median = input->data[(dataSize - 1) / 2];
     } else { //data size is even
@@ -286,7 +304,7 @@ void minMedMax(struct myData *input) { //returns array of min, median, and max
 //assumes data is sorted
 //returns values that make quartiles
 //quartile data index: 0 is first quartile, 1 is third quartile
-void quartile(struct myData *input) {
+void *quartile(struct myData *input) {
     //Yes, we could have just reuesed the "median" method, but that would have required copying over the array twice, which is eh
     double firstQuartile = 0;
     double thirdQuartile = 0;
@@ -312,7 +330,7 @@ void quartile(struct myData *input) {
 
 //returns the standard deviation of the data
 //assumes data is sorted, and mean is found
-void sd(struct myData *input) {
+void *sd(struct myData *input) {
     int dataSize = input->size;
     double myMean = meanVal;
     double sum = 0;
@@ -327,7 +345,7 @@ void sd(struct myData *input) {
 
 //returns the mode of the data
 //assumes data is sorted
-void mode(struct myData *input){
+void *mode(struct myData *input){
     //TODO: Make so can account for either multiple modes, or no modes
     int dataSize = input->size;
     double EPSILON = 0.000001; //for purposes of comparing doubles
