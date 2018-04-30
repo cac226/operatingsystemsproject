@@ -209,7 +209,10 @@ int main(int argc, char *argv[]){
 		printf("First Quartile = %.2f\n", quartileData[0]);
 	if(ops[9])
 		printf("Third Quartile = %.2f\n", quartileData[1]);
-	
+	if(ops[7])
+		for (i = 0; i < mainData.size; i++){
+            printf("Sorted Data:\n", mainData.data[i]);
+        }
 	return 0;
 	
 	
