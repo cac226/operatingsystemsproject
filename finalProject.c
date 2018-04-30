@@ -125,13 +125,12 @@ int main(int argc, char *argv[]){
 	//checks if user is requesting any operations that use a sorted list
 	if (ops[7] || ops[2] || ops[5] || ops[6] || ops[3] || ops[8] || ops[9]){
 		//sort has to sort the data before any of the methods that require sorted data run
-		pthread_create(&tid[6], &attr, sort, &data);
+		pthread_create(&tid[6], &attr, sort, &mainData);
 		pthread_join(tid[6], NULL);
         
         for (i = 0; i < sizeof(data)/sizeof(data[0]); i++){
-            data[i] = sortedData[i];
+            mainData.data[i] = sortedData[i];
         }
-		
 	}
 	
 	
@@ -233,6 +232,7 @@ void mean(struct myData *input) {
 
 //returns sorted list of data
 void sort(struct myData *input) {
+    printf("working...\n");
     int dataSize = input->size;
     double result[dataSize];
     //first element
@@ -242,6 +242,7 @@ void sort(struct myData *input) {
     printf("\n");
     //insersion sort
     for(i = 1; i < dataSize; i++) {
+        printf("working...\n");
         count = i - 1;
         
         while(count >= 0 && result[count] > input->data[i]) {
@@ -256,6 +257,7 @@ void sort(struct myData *input) {
         //final variable
         result[count + 1] = input->data[i];
     }
+    printf("\n\nworking...\n");
     
     int m;
     for(m = 0; m < dataSize; m++) {
@@ -271,12 +273,16 @@ void sort(struct myData *input) {
 //finds the minimum, median and max of the data
 //assumes data is sorted
 void minMedMax(struct myData *input) { //returns array of min, median, and max
+    printf("working...\n");
     //number of elements in the data set
     int dataSize = input->size;
-    
+    printf("working...\n");
+    printf("");
     if(dataSize % 2 == 1) { //data size is odd
+        printf("working...\n");
         median = input->data[(dataSize - 1) / 2];
     } else { //data size is even
+        printf("working...\n");
         double val1 = input->data[dataSize / 2]; //first middle value
         double val2 = input->data[(dataSize - 2) / 2]; //second middle value
         median = (val1 + val2) / 2;
