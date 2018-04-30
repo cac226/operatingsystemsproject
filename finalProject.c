@@ -45,7 +45,6 @@ int main(int argc, char *argv[]){
 	int threadcount = 0; //keeps track of how many threads are being used
 	pthread_attr_t attr; // set of attributes for the thread 
 	pthread_attr_init(&attr); // get the default attributes 
-	double meanVal, standardDeviation; //defines data that methods will return
 	FILE *file; //pointer to file to read in values
 	FILE *file1; //pointer to file to find num of values to read in
 	//checks if correct size of input has been entered
