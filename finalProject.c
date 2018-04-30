@@ -113,7 +113,7 @@ int main(int argc, char *argv[]){
     /*MAKE STRUCT*/
     struct myData mainData;
     mainData.data = data;
-    mainData.size = input->size;
+    mainData.size = sizeof(data)/sizeof(data[0]);
     
 		
 	//if user requests all operations, set all operations to true
@@ -128,7 +128,7 @@ int main(int argc, char *argv[]){
 		pthread_create(&tid[6], &attr, sort, &data);
 		pthread_join(tid[6], NULL);
         
-        for (i = 0; i < input->size; i++){
+        for (i = 0; i < sizeof(data)/sizeof(data[0]); i++){
             data[i] = sortedData[i];
         }
 		
@@ -152,7 +152,7 @@ int main(int argc, char *argv[]){
 			printf("minimum\n");
 		if (ops[5])//maximum
 			printf("maximum\n");
-		pthread_create(&tid[j], &attr, minMedMax, mainData);
+		pthread_create(&tid[j], &attr, minMedMax, &mainData);
 		threadcount++;	
 		j++;
 	}
