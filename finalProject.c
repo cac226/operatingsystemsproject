@@ -67,7 +67,6 @@ int main(int argc, char *argv[]){
 		}
 	}
 	double data[count]; //input data 
-	sortedData[count]; //alocating size of sortedData to be size of input data
     printf("Sor");
 	char str[10];
 	while (fscanf(file, "%s", str) == 1){
@@ -131,6 +130,7 @@ int main(int argc, char *argv[]){
         
         for (i = 0; i < mainData.size; i++){
             mainData.data[i] = sortedData[i];
+			
         }
 	}
 	
