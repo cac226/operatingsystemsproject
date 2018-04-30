@@ -225,7 +225,8 @@ void mean(struct myData *input) {
         sum += input->data[i];
     }
     double myMean = (sum / numOfData);
-    
+    printf("Mean thing says: %.2f\n", myMean);
+    meanVal = myMean;
     pthread_exit(&myMean);
 }
 
