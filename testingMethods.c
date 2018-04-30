@@ -40,7 +40,7 @@ int main(int argc, char *argv[]){
      PLAN: by default, will return everything, if give input, then will only do some things
      */
 	 //data from file must be stored into array called data 
-	double data[6] = {1, 2, 3, 4, 5, 6};
+	double data[7] = {1, 2, 3, 4, 5, 6, 7};
     
     struct myData mainData;
     mainData.size = (sizeof(data)/sizeof(data[0]));
@@ -61,6 +61,7 @@ int main(int argc, char *argv[]){
     
     pthread_create(&tid[0], &attr, quartile, &mainData);
     pthread_join(tid[0], NULL);
+    printf("First Quartile: %.2f\nThird Quartile: %.2f\n", quartileData[0], quartileData[1]);
     
     /*
     //sort has to sort the data before any of the methods that require sorted data run
