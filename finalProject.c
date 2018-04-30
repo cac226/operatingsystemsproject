@@ -9,6 +9,7 @@
 #include <ctype.h>
 #include <unistd.h>
 #include <errno.h>
+#include <pthread.h>
 
 //struct for data
 typedef struct myData {
