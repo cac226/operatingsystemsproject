@@ -35,6 +35,7 @@ int main(int argc, char *argv[]){
     pthread_attr_t attr; // set of attributes for the thread
     pthread_attr_init(&attr); // get the default attributes
     
+<<<<<<< HEAD
     double data[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     
     double meanVal, standardDeviation; //defines data that methods will return
@@ -42,6 +43,33 @@ int main(int argc, char *argv[]){
     double meanResult;
     //initialize thread ids
     pthread_t tid[6];
+=======
+    /*
+     PLAN: by default, will return everything, if give input, then will only do some things
+     */
+	 //data from file must be stored into array called data 
+	double data[6] = {1, 2, 3, 4, 5, 6};
+    
+    struct myData mainData;
+    mainData.size = (sizeof(data)/sizeof(data[0]));
+    mainData.data = data;
+	int threadcount = 6;
+	/* set of attributes for the thread */
+	pthread_attr_t attr; 
+	/* get the default attributes */
+	pthread_attr_init(&attr);
+	//defines data that methods will return
+	double meanVal, standardDeviation;
+	//alocating size of sortedData to be size of input data
+	sortedData = malloc(sizeof(data)/sizeof(data[0]));
+	//pointer to file
+
+	//initialize thread ids
+	pthread_t tid[6];
+    
+    pthread_create(&tid[0], &attr, quartile, &mainData);
+    pthread_join(tid[0], NULL);
+>>>>>>> parent of b8a23d4... testing
     
     pthread_create(&tid[5], &attr, mean, &data);
     pthread_join(tid[5], &meanResult);
