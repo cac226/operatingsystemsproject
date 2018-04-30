@@ -83,7 +83,7 @@ int main(int argc, char *argv[]){
 	printf("Choose one or more of the following operations on the data by\n"
 			"typing the corresponding number(s) separated by a space\n"
 			"0)all options \n1)Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
-			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\n");
+			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\nInput: ");
 	fgets(line, 20, stdin);
 	token = strtok(line, " ");
 	//reading in string, making sure only numbers were entered
