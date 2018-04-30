@@ -67,7 +67,8 @@ int main(int argc, char *argv[]){
 		}
 	}
 	double data[count]; //input data 
-	double sortedData[count]; //alocating size of sortedData to be size of input data
+	sortedData[count]; //alocating size of sortedData to be size of input data
+    printf("Sor");
 	char str[10];
 	while (fscanf(file, "%s", str) == 1){
 		if(isdigit(*str)){
@@ -258,11 +259,11 @@ void sort(struct myData *input) {
         result[count + 1] = input->data[i];
     }
     printf("\n\nworking...\n");
-    
     int m;
     for(m = 0; m < dataSize; m++) {
         sortedData[m] = result[m];
     }
+    
     printf("\ndid sorting\n");
     fflush(stdout);
     
