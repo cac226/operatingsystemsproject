@@ -47,16 +47,14 @@ int main(int argc, char *argv[]){
 	pthread_attr_init(&attr); // get the default attributes 
 	FILE *file; //pointer to file to read in values
 	FILE *file1; //pointer to file to find num of values to read in
-	//checks if correct size of input has been entered
-	if (argc == 0 || argc > 1){
-		printf("Error: wrong number of arguments\n"
-				"please enter the name of the text file containing the data\n");
-	}
-	
+    
+	//checks if valid file
 	if ((file = fopen(argv[1], "r"))==NULL) {
-		printf("Cannot open file \n");
+		printf("Cannot open file. Please enter a valid file name. \n");
 		exit(1);
-	}
+    } else {
+        printf("File opened! \n");
+    }
 	 
 	file1 = fopen(argv[1], "r"); //reading in file to find size
 	char str1[10];
@@ -80,10 +78,10 @@ int main(int argc, char *argv[]){
 			badinput = 1;
 	}
 	//double sort[(input->size)], minMedmax[3], quartile[2];
-	printf("Choose one or more of the following operations on the data by\n"
-			"typing the corresponding number(s) separated by a space\n"
+	printf("\n\nChoose one or more of the following operations on the data by\n"
+			"typing the corresponding number(s) separated by a space\n\n"
 			"0)all options \n1)Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
-			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\nInput: ");
+			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\n\nInput: ");
 	fgets(line, 20, stdin);
 	token = strtok(line, " ");
     
@@ -173,13 +171,15 @@ int main(int argc, char *argv[]){
 	for (i = 0; i < threadcount; i++)
 		pthread_join(tid[i], NULL);
 	
+    printf("\n\n"); //formatting
+    
 	//print statements for results
 	if(ops[1])
 		printf("Mean = %.2f\n", meanVal);
 	if(ops[2])
 		printf("Median = %.2f\n", median);
-	if(ops[3])
-		printf("Mode = %.2f\n", globMode);
+    if(ops[3])
+        printf("Mode = %.2f\n", globMode);
 	if(ops[4])
 		printf("Standard Deviation = %.2f\n", standardDeviation);
 	if(ops[5])
@@ -190,15 +190,18 @@ int main(int argc, char *argv[]){
 		printf("First Quartile = %.2f\n", quartileData[0]);
 	if(ops[9])
 		printf("Third Quartile = %.2f\n", quartileData[1]);
-	if(ops[7])
+    if(ops[7]) {
 		printf("Sorted Data:\n");
 		for (i = 0; i < mainData.size; i++){
-            printf("%.2f, ", mainData.data[i]);
+            printf("%.2f\t", mainData.data[i]);
+            if(i % 10 == 9) {
+                printf("\n");
+            }
         }
+    }
+    printf("\n\n"); //formatting
+    
 	return 0;
-	
-	
-	
 }
 
 
@@ -316,27 +319,22 @@ void sd(struct myData *input) {
     pthread_exit(0);
 }
 
-//returns the mode of the data
+//returns first found mode of the data
 //assumes data is sorted
+//if there are multiple modes, it will make a note of that
 void mode(struct myData *input){
     //TODO: Make so can account for either multiple modes, or no modes
     int dataSize = input->size;
     double EPSILON = 0.000001; //for purposes of comparing doubles
-    
     double currentMode = input->data[0];
-    int maxTimesOccured = 1;
-    int i = 0;
-    while(i < dataSize && (abs(input->data[i] - currentMode) < EPSILON)) {
-        maxTimesOccured++;
-        i++;
-    }
-    double beingChecked = input->data[i];
-    i++;
+    double beingChecked = input->data[0];
     int timesOccured = 1;
+    int maxTimesOccured = 0;
+    int i = 1;
     while(i < dataSize) {
         if(abs(input->data[i] - beingChecked) < EPSILON) { //if found another instance
             timesOccured++;
-        } else {
+        } else { //finished counting a particular value
             if(timesOccured > maxTimesOccured) {
                 maxTimesOccured = timesOccured;
                 currentMode = beingChecked;
@@ -347,7 +345,6 @@ void mode(struct myData *input){
         }
         i++;
     }
-    
     globMode = currentMode;
     pthread_exit(0);
 }
