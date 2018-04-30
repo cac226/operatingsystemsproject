@@ -79,13 +79,18 @@ int main(int argc, char *argv[]){
 		else
 			badinput = 1;
 	}
-	//double sort[(sizeof(data)/sizeof(data[0]))], minMedmax[3], quartile[2]; 
+	//double sort[(input->size)], minMedmax[3], quartile[2];
 	printf("Choose one or more of the following operations on the data by\n"
 			"typing the corresponding number(s) separated by a space\n"
 			"0)all options \n1)Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
 			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\nInput: ");
 	fgets(line, 20, stdin);
 	token = strtok(line, " ");
+    
+    struct myData mainData;
+    mainData.data = data;
+    mainData.size = (sizeof(data)/sizeof(data[0]));
+    
 	//reading in string, making sure only numbers were entered
 	while(token != NULL ) {
 		if (isdigit(*token)){
@@ -113,7 +118,7 @@ int main(int argc, char *argv[]){
     /*MAKE STRUCT*/
     struct myData mainData;
     mainData.data = data;
-    mainData.size = sizeof(data)/sizeof(data[0]);
+    mainData.size = input->size;
     
 		
 	//if user requests all operations, set all operations to true
@@ -128,7 +133,7 @@ int main(int argc, char *argv[]){
 		pthread_create(&tid[6], &attr, sort, &data);
 		pthread_join(tid[6], NULL);
         
-        for (i = 0; i < sizeof(data)/sizeof(data[0]); i++){
+        for (i = 0; i < input->size; i++){
             data[i] = sortedData[i];
         }
 		
@@ -218,13 +223,8 @@ int main(int argc, char *argv[]){
 
 
 //returns the mean
-<<<<<<< HEAD
-void mean(double data[]) {
-    int numOfData = (sizeof(data)/sizeof(data[0]));
-=======
 void mean(struct myData *input) {
     int numOfData = input->size;
->>>>>>> parent of 7b45c99... removed struct
     double sum = 0;
     int i;
     for(i = 0; i < numOfData; i++) {
@@ -237,14 +237,8 @@ void mean(struct myData *input) {
 }
 
 //returns sorted list of data
-<<<<<<< HEAD
-void sort(double data[]) {
-    int dataSize = (sizeof(data)/sizeof(data[0]));
-=======
 void sort(struct myData *input) {
     int dataSize = input->size;
->>>>>>> parent of 7b45c99... removed struct
-    
     double result[dataSize];
     //first element
     result[0] = input->data[0];
@@ -283,11 +277,7 @@ void sort(struct myData *input) {
 //assumes data is sorted
 void minMedMax(struct myData *input) { //returns array of min, median, and max
     //number of elements in the data set
-<<<<<<< HEAD
-    int dataSize = (sizeof(data)/sizeof(data[0]));
-=======
     int dataSize = input->size;
->>>>>>> parent of 7b45c99... removed struct
     
     if(dataSize % 2 == 1) { //data size is odd
         median = input->data[(dataSize - 1) / 2];
@@ -310,19 +300,18 @@ void quartile(struct myData *input) {
     //Yes, we could have just reuesed the "median" method, but that would have required copying over the array twice, which is eh
     double firstQuartile = 0;
     double thirdQuartile = 0;
-<<<<<<< HEAD
-    if((sizeof(data)/sizeof(data[0])) % 4 == 0) { //if an even number of things
-        firstQuartile = (data[(sizeof(data)/sizeof(data[0])) / 4] + data[(sizeof(data)/sizeof(data[0])) / 4 - 1]) / 2;
-        thirdQuartile = (data[((sizeof(data)/sizeof(data[0])) / 4)*3] + data[((sizeof(data)/sizeof(data[0])) / 4)*3 - 1]) / 2;
-    } else if ((sizeof(data)/sizeof(data[0])) % 4 == 1) {
-        firstQuartile = data[(sizeof(data)/sizeof(data[0])) / 4];
-        thirdQuartile = data[((sizeof(data)/sizeof(data[0])) / 4)*3];
-    } else if ((sizeof(data)/sizeof(data[0])) % 4 == 2) {
-        firstQuartile = data[(sizeof(data)/sizeof(data[0])) / 4];
-        thirdQuartile = data[((sizeof(data)/sizeof(data[0])) / 4)*3 + 1];
+    if((input->size) % 4 == 0) { //if an even number of things
+        firstQuartile = (input->data[(input->size) / 4] + input->data[(input->size) / 4 - 1]) / 2;
+        thirdQuartile = (input->data[((input->size) / 4)*3] + input->data[((input->size) / 4)*3 - 1]) / 2;
+    } else if ((input->size) % 4 == 1) {
+        firstQuartile = input->data[(input->size) / 4];
+        thirdQuartile = input->data[((input->size) / 4)*3];
+    } else if ((input->size) % 4 == 2) {
+        firstQuartile = input->data[(input->size) / 4];
+        thirdQuartile = input->data[((input->size) / 4)*3 + 1];
     } else {
-        firstQuartile = (data[(sizeof(data)/sizeof(data[0])) / 4] + data[(sizeof(data)/sizeof(data[0])) / 4 + 1]) / 2;
-        thirdQuartile = (data[((sizeof(data)/sizeof(data[0])) / 4)*3 + 1] + data[((sizeof(data)/sizeof(data[0])) / 4)*3 + 2]) / 2;
+        firstQuartile = (input->data[(input->size) / 4] + input->data[(input->size) / 4 + 1]) / 2;
+        thirdQuartile = (input->data[((input->size) / 4)*3 + 1] + input->data[((input->size) / 4)*3 + 2]) / 2;
     if(input->size % 4 == 0) { //if an even number of things
         firstQuartile = (input->data[input->size / 4] + input->data[input->size / 4 - 1]) / 2;
         thirdQuartile = (input->data[(input->size / 4)*3] + input->data[(input->size / 4)*3 - 1]) / 2;
@@ -345,9 +334,6 @@ void quartile(struct myData *input) {
 
 //returns the standard deviation of the data
 //assumes data is sorted, and mean is found
-<<<<<<< HEAD
-void sd(double data[]) {
-    int dataSize = (sizeof(data)/sizeof(data[0]));
 void sd(struct myData *input) {
     int dataSize = input->size;
     double myMean = meanVal;
@@ -365,11 +351,7 @@ void sd(struct myData *input) {
 //assumes data is sorted
 void mode(struct myData *input){
     //TODO: Make so can account for either multiple modes, or no modes
-<<<<<<< HEAD
-    int dataSize = (sizeof(data)/sizeof(data[0]));
-=======
     int dataSize = input->size;
->>>>>>> parent of 7b45c99... removed struct
     double EPSILON = 0.000001; //for purposes of comparing doubles
     
     double currentMode = input->data[0];
