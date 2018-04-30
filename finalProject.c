@@ -129,7 +129,7 @@ int main(int argc, char *argv[]){
 		pthread_create(&tid[6], &attr, sort, &mainData);
 		pthread_join(tid[6], NULL);
         
-        for (i = 0; i < sizeof(data)/sizeof(data[0]); i++){
+        for (i = 0; i < mainData.size; i++){
             mainData.data[i] = sortedData[i];
         }
 	}
