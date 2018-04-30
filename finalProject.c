@@ -323,7 +323,6 @@ void quartile(struct myData *input) {
     } else {
         firstQuartile = (data[(sizeof(data)/sizeof(data[0])) / 4] + data[(sizeof(data)/sizeof(data[0])) / 4 + 1]) / 2;
         thirdQuartile = (data[((sizeof(data)/sizeof(data[0])) / 4)*3 + 1] + data[((sizeof(data)/sizeof(data[0])) / 4)*3 + 2]) / 2;
-=======
     if(input->size % 4 == 0) { //if an even number of things
         firstQuartile = (input->data[input->size / 4] + input->data[input->size / 4 - 1]) / 2;
         thirdQuartile = (input->data[(input->size / 4)*3] + input->data[(input->size / 4)*3 - 1]) / 2;
@@ -336,7 +335,6 @@ void quartile(struct myData *input) {
     } else {
         firstQuartile = (input->data[input->size / 4] + input->data[input->size / 4 + 1]) / 2;
         thirdQuartile = (input->data[(input->size / 4)*3 + 1] + input->data[(input->size / 4)*3 + 2]) / 2;
->>>>>>> parent of 7b45c99... removed struct
     }
     
     quartileData[0] = firstQuartile;
@@ -350,10 +348,8 @@ void quartile(struct myData *input) {
 <<<<<<< HEAD
 void sd(double data[]) {
     int dataSize = (sizeof(data)/sizeof(data[0]));
-=======
 void sd(struct myData *input) {
     int dataSize = input->size;
->>>>>>> parent of 7b45c99... removed struct
     double myMean = meanVal;
     double sum = 0;
     int i;
