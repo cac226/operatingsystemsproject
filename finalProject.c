@@ -1,5 +1,5 @@
 // Caitlin Campbell and Shanti Polara Final Project
-//Beta version
+// Final Version
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
