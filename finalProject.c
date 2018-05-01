@@ -57,6 +57,8 @@ int main(int argc, char *argv[]){
 	file1 = fopen(argv[1], "r"); //reading in file to find size
 	char str1[10];
 	int count = 0;
+	
+	//finds size of file
 	while (fscanf(file1, "%s", str1) == 1){
 		if(isdigit(*str1)){
 			count++;
@@ -65,6 +67,8 @@ int main(int argc, char *argv[]){
 	int data[count]; //input data
     
 	char str[10];
+	
+	//reads in data from file, checks if any values are non-numeric
 	while (fscanf(file, "%s", str) == 1){
 		if(isdigit(*str)){
 			con = atoi(str);
