@@ -13,7 +13,7 @@
 
 //struct for data
 typedef struct myData {
-    double *data;
+    int *data;
     int size;
 };
 
@@ -26,8 +26,9 @@ void quartile(struct myData *input); //returns
 void sd(struct myData *input);
 
 double quartileData[2];
-double meanVal, standardDeviation, min, median, max;
-double sortedData[];
+double meanVal, standardDeviation, median;
+int sortedData[];
+int min, max;
 
 int main(int argc, char *argv[]){
 
@@ -61,7 +62,7 @@ int main(int argc, char *argv[]){
 			count++;
 		}
 	}
-	double data[count]; //input data
+	int data[count]; //input data
     
 	char str[10];
 	while (fscanf(file, "%s", str) == 1){
@@ -172,9 +173,9 @@ int main(int argc, char *argv[]){
     if(ops[3])
         printf("Standard Deviation = %.2f\n", standardDeviation);
 	if(ops[4])
-		printf("Maximum Value = %.2f\n", max);
+		printf("Maximum Value = %d\n", max);
 	if(ops[5])
-		printf("Minimum Value = %.2f\n", min);
+		printf("Minimum Value = %d\n", min);
 	if(ops[7])
 		printf("First Quartile = %.2f\n", quartileData[0]);
 	if(ops[8])
@@ -182,7 +183,7 @@ int main(int argc, char *argv[]){
     if(ops[6]) {
 		printf("Sorted Data:\n");
 		for (i = 0; i < mainData.size; i++){
-            printf("%.2f\t", mainData.data[i]);
+            printf("%d\t", mainData.data[i]);
             if(i % 10 == 9) {
                 printf("\n");
             }
@@ -210,7 +211,7 @@ void mean(struct myData *input) {
 //returns sorted list of data
 void sort(struct myData *input) {
     int dataSize = input->size;
-    double result[dataSize];
+    int result[dataSize];
     
     //first element
     result[0] = input->data[0];
