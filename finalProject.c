@@ -26,9 +26,9 @@ void quartile(struct myData *input); //returns
 void sd(struct myData *input);
 
 double quartileData[2];
-double meanVal, standardDeviation, median;
+double meanVal, standardDeviation, median; //median, mean, and standardDeviantion may be doubles
 int sortedData[];
-int min, max;
+int min, max; //min and max are ints because they will always be a data value
 
 int main(int argc, char *argv[]){
 
