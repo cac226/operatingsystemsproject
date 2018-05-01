@@ -24,10 +24,9 @@ void sort(struct myData *input);
 void minMedMax(struct myData *input); //returns array of min, median, and max
 void quartile(struct myData *input); //returns
 void sd(struct myData *input);
-void mode(struct myData *input);
 
 double quartileData[2];
-double meanVal, standardDeviation, min, median, max, globMode;
+double meanVal, standardDeviation, min, median, max;
 double sortedData[];
 
 int main(int argc, char *argv[]){
@@ -38,7 +37,7 @@ int main(int argc, char *argv[]){
 	int con, i = 0; //counter value
 	
 	//keeps track of requested operations on the data using 0, 1 as boolean values
-	int ops[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; 
+	int ops[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 	
 	int badinput = 0; //keeps track of if user inputs non-numbers
 	
@@ -64,7 +63,6 @@ int main(int argc, char *argv[]){
 	}
 	double data[count]; //input data
     
-	//sortedData[count]; //alocating size of sortedData to be size of input data
 	char str[10];
 	while (fscanf(file, "%s", str) == 1){
 		if(isdigit(*str)){
@@ -78,8 +76,8 @@ int main(int argc, char *argv[]){
 	//double sort[(input->size)], minMedmax[3], quartile[2];
 	printf("\n\nChoose one or more of the following operations on the data by\n"
 			"typing the corresponding number(s) separated by a space\n\n"
-			"0)all options \n1)Mean \n2)Median \n3)Mode \n4)Standard Deviation \n5)Maximum Value"
-			"\n6)Minimum Value \n7)Sorted List \n8)First Quartile \n9)Third Quartile\n\nInput: ");
+			"0)all options \n1)Mean \n2)Median \n3)Standard Deviation \n4)Maximum Value"
+			"\n5)Minimum Value \n6)Sorted List \n7)First Quartile \n8)Third Quartile\n\nInput: ");
 	fgets(line, 20, stdin);
 	token = strtok(line, " ");
     
@@ -88,7 +86,7 @@ int main(int argc, char *argv[]){
 		if (isdigit(*token)){
 			con = *token - '0';
 			fflush(stdout);
-			if (con <= 9 && con >= 0)
+			if (con <= 8 && con >= 0)
 				ops[con] = 1;
 			else
 				badinput = 1;
@@ -120,8 +118,10 @@ int main(int argc, char *argv[]){
 			ops[i] = 1;
 	}
 	
+    
+    
 	//checks if user is requesting any operations that use a sorted list
-	if (ops[7] || ops[2] || ops[5] || ops[6] || ops[3] || ops[8] || ops[9]){
+	if (ops[2] || ops[4] || ops[5] || ops[6] || ops[7] || ops[8]){
 		//sort has to sort the data before any of the methods that require sorted data run
 		pthread_create(&tid[6], &attr, sort, &mainData);
 		pthread_join(tid[6], NULL);
@@ -131,27 +131,20 @@ int main(int argc, char *argv[]){
 	
 	int j = 0; //keeps count of number of threads
 	//thread creation for mean, keeping track of number of threads
-	if (ops[1] || ops[4]){ //mean
+	if (ops[1] || ops[3]){ //mean
 		pthread_create(&tid[5], &attr, mean, &mainData);
 		pthread_join(tid[5], NULL);
 	}
 	 
 	//checks if user requested median, max or min as operations
-	if ((ops[2] || ops[5]) || ops[6]){ //median, max, min
+	if ((ops[2] || ops[4]) || ops[5]){ //median, max, min
 		pthread_create(&tid[j], &attr, minMedMax, &mainData);
 		threadcount++;	
 		j++;
 	}
 	
-	//checks if user requested mode as an operation
-	if (ops[3]){ 
-		pthread_create(&tid[j], &attr, mode, &mainData);
-		threadcount++;	
-		j++;
-	}
-	
 	//checks if user requested standard deviation as an operation
-	if (ops[4]){ 
+	if (ops[3]){
 		pthread_create(&tid[j], &attr, sd, &mainData);
 		threadcount++;	
 		j++;
@@ -159,7 +152,7 @@ int main(int argc, char *argv[]){
 	
 
 	//checks if user requested first quartile or second quartiles as operations
-	if (ops[8] || ops[9]){
+	if (ops[8] || ops[7]){
 		pthread_create(&tid[j], &attr, quartile, &mainData);
 		threadcount++;
 		j++;
@@ -177,18 +170,16 @@ int main(int argc, char *argv[]){
 	if(ops[2])
 		printf("Median = %.2f\n", median);
     if(ops[3])
-        printf("Mode = %.2f\n", globMode);
+        printf("Standard Deviation = %.2f\n", standardDeviation);
 	if(ops[4])
-		printf("Standard Deviation = %.2f\n", standardDeviation);
-	if(ops[5])
 		printf("Maximum Value = %.2f\n", max);
-	if(ops[6])
+	if(ops[5])
 		printf("Minimum Value = %.2f\n", min);
-	if(ops[8])
+	if(ops[7])
 		printf("First Quartile = %.2f\n", quartileData[0]);
-	if(ops[9])
+	if(ops[8])
 		printf("Third Quartile = %.2f\n", quartileData[1]);
-    if(ops[7]) {
+    if(ops[6]) {
 		printf("Sorted Data:\n");
 		for (i = 0; i < mainData.size; i++){
             printf("%.2f\t", mainData.data[i]);
@@ -314,35 +305,5 @@ void sd(struct myData *input) {
     }
     
     standardDeviation = sqrt(sum / dataSize);
-    pthread_exit(0);
-}
-
-//returns first found mode of the data
-//assumes data is sorted
-//if there are multiple modes, it will make a note of that
-void mode(struct myData *input){
-    //TODO: Make so can account for either multiple modes, or no modes
-    int dataSize = input->size;
-    double EPSILON = 0.000001; //for purposes of comparing doubles
-    double currentMode = input->data[0];
-    double beingChecked = input->data[0];
-    int timesOccured = 1;
-    int maxTimesOccured = 0;
-    int i = 1;
-    while(i < dataSize) {
-        if(abs(input->data[i] - beingChecked) < EPSILON) { //if found another instance
-            timesOccured++;
-        } else { //finished counting a particular value
-            if(timesOccured > maxTimesOccured) {
-                maxTimesOccured = timesOccured;
-                currentMode = beingChecked;
-            }
-            
-            beingChecked = input->data[i];
-            timesOccured = 1;
-        }
-        i++;
-    }
-    globMode = currentMode;
     pthread_exit(0);
 }
